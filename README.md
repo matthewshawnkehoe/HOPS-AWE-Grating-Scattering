@@ -7,10 +7,10 @@ posed on piecewise homogeneous domains. The algorithm was built and designed by 
 ## Installation
 Download the Matlab code in src. The three main files are
 
-* refl_map.m: Calculates the Reflectivity Map, R, which measures the response (reflected energy) of a periodically corrugated grating structure as a
+1. refl_map.m: Calculates the Reflectivity Map, R, which measures the response (reflected energy) of a periodically corrugated grating structure as a
 function of illumination frequency, ω, and corrugation amplitude, h.
-* mms_error.m: Validates the accuracy of the algorithm through the Method of Manufactured Solutions (MMS).
-* test_mms_error.m: Rigorously valdiates all of the important Matlab code.
+2. mms_error.m: Validates the accuracy of the algorithm through the Method of Manufactured Solutions (MMS).
+3. test_mms_error.m: Rigorously valdiates all of the important Matlab code.
 
 ## References
 Interested readers can review the following PDFs
