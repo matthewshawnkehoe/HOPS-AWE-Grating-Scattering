@@ -17,7 +17,7 @@ Interested readers can review the following PDFs
 
 * General Overview of the Algorithm: [AWE Paper](http://homepages.math.uic.edu/~nicholls/papers/Submitted/HOPSAWEComput.pdf)
 * Theory behind the Algorithm: [Theory Paper](http://homepages.math.uic.edu/~nicholls/papers/Submitted/HOPSAWEAnal.pdf)
-* Overview of the Method: [Wave Scattering Periodic Media](https://axion004.files.wordpress.com/2022/07/wave_scattering_hops_awe-2-1.pdf)
+* Overview of the Method: [Wave Scattering Periodic Media](https://axion004.files.wordpress.com/2022/10/wave_scattering_hops_awe-2-1.pdf)
 
 ## Plotting
 
