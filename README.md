@@ -33,4 +33,4 @@ Interested readers can review the following papers
 
 ## Questions
 
-Email Matthew Kehoe (mkehoe@mtu.edu) about any questions related to the HOPS/AWE algorithm or the above references.
+Email Matthew Kehoe (mskehoe001@gmail.com) about any questions related to the HOPS/AWE algorithm or the above references.
