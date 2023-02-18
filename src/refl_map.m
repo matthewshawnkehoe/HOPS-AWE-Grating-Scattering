@@ -18,7 +18,7 @@ elseif(RunNumber==3)
   Eps_Max = 0.1; sigma = 0.5;
 elseif(RunNumber==100)
   % HOPS/AWE paper
-  M = 16; Nx = 32;
+  M = 15; Nx = 32;
   Eps_Max = 0.2; sigma = 0.99;
 end
 N = M; Nz = 32;
@@ -27,10 +27,10 @@ alpha_bar = 0;
 d = 2*pi;
 c_0 = 1;
 n_u = 1.0;
-n_w = 1.1;   %2.3782, Carbon
+n_w = 0.05 + 2.275*1i;   %2.3782, Carbon
 % Mode = 1 (TE) or 2 (TM)
 Mode = 2;
-Taylor = true;
+Taylor = false;
 
 N_delta = 100;
 N_Eps = 100;
@@ -53,10 +53,10 @@ xx = (d/Nx)*[0:Nx-1]';
 %f_x = (pi/d)*cos(4*pi*xx/d);
 %f = (1/2)*cos(2*pi*xx/d);
 %f_x = -(2*pi/d)*sin(2*pi*xx/d);
-%f = (1/4)*cos(4*xx);
-%f_x = -sin(4*xx);
-f = cos(xx);
-f_x = -sin(xx);
+f = cos(4*xx);
+f_x = -4*sin(4*xx);
+% f = cos(xx);
+% f_x = -sin(xx);
 
 % Sawtooth/Lipschitz
 %P = 40;
