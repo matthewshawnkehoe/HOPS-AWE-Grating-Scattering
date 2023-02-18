@@ -12,9 +12,7 @@ A(end,end,:) = A(end,end,:) + d_min;
 A(1,1,:) = A(1,1,:) + reshape(d_max,1,1,Nx);
 b(1,:) = r_max;
 
-for j=1:Nx
-   utilde = linsolve(A(:,:,j),b(:,j)); % A\b
-   Uhat(j,:) = utilde.';
-end
+utilde = pagemldivide(A,reshape(b,[],1,Nx));
+Uhat = utilde(:,:).';
 
 return;
