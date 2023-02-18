@@ -12,9 +12,7 @@ A(end,end,:) = A(end,end,:) + reshape(d_min,1,1,Nx);
 A(1,1,:) = A(1,1,:) + d_max;
 b(1,:) = r_max;
 
-for j=1:Nx
-   wtilde = linsolve(A(:,:,j),b(:,j)); % A\b
-   What(j,:) = wtilde.';
-end
+wtilde = pagemldivide(A,reshape(b,[],1,Nx));
+What = wtilde(:,:).';
 
 return;
