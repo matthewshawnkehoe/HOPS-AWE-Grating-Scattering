@@ -174,7 +174,7 @@ for n=0:N
     n_max = 1.0;
     r_max = Jnmhat;
     
-    Uhat = solvebvp_colloc_fast(Uhat,b,alphaalpha,betabeta,gammagamma,...
+    Uhat = solvebvp_colloc_fast(b,alphaalpha,betabeta,gammagamma,...
         d_min,n_min,r_min,d_max,n_max,r_max,Nx,identy,D,D2,D_start,D_end);
     
     if((n>0)||(m>0))
