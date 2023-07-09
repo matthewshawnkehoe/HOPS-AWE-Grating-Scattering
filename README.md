@@ -28,7 +28,7 @@ More examples (with instructions on how to run the code) can be found in the plo
 Interested readers can review the following papers
 
 * General Overview of the Algorithm: [AWE Paper](http://homepages.math.uic.edu/~nicholls/papers/Submitted/HOPSAWEComput.pdf)
-* Theory behind the Algorithm: [Theory Paper](http://homepages.math.uic.edu/~nicholls/papers/Submitted/HOPSAWEAnal.pdf)
+* Theory behind the Algorithm: [Theory Paper](http://homepages.math.uic.edu/~nicholls/papers/Final/hopsaweanal.sima.pdf)
 * Overview of the Method: [Wave Scattering Periodic Media](http://matthewshawnkehoe.github.io/files/kehoe_thesis.pdf)
 
 ## Questions
