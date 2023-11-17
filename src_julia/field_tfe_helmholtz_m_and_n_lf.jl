@@ -1,6 +1,26 @@
 using FFTW
 using LinearAlgebra
 
+"""
+Compute the approximate solution (wnm) in the lower field.
+### Input
+- `xi_lf_n_m` -- a tensor representing the partial solution in the lower field
+- `f` -- a test function representing the grating surface
+- `p` -- an integer where tilde_p = (2π/d)p and d is the periodicity of the grating interface
+- `gammapw` -- a numerical constant in the lower field for all wave numbers p
+- `alpha` -- a numerical constant
+- `gammaw` -- a numerical constant in the lower field 
+- `Dz` -- the partial derivative with respect to the z component
+- `b` -- the artificial boundary imposed at the bottom of the lower layer
+- `Nx` -- the number of discretization points
+- `Nz` -- the number of collocation points
+- `N` -- the maximum number of Taylor orders for the interfacial perturbation
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+- `identy` -- the identity matrix
+- `alphap` -- a numerical constant at all wave numbers p
+### Output
+- `wmn` -- a tensor representing the approximate solution in the lower field
+"""
 function field_tfe_helmholtz_m_and_n_lf(xi_lf_n_m,f,p,gammapw,
                     alpha,gammaw,Dz,b,Nx,Nz,N,M,identy,alphap)
 
@@ -39,23 +59,23 @@ function field_tfe_helmholtz_m_and_n_lf(xi_lf_n_m,f,p,gammapw,
   end
 
   A1_xx = (2.0/b)*f_full
-  A1_xz = -(1.0/b)*(b_plus_z_full).*f_x_full
+  A1_xz = @. -(1.0/b)*(b_plus_z_full)*f_x_full
   A1_zx = A1_xz
   #A1_zz = 0
     
   A2_xx = (1.0/b^2)*f_full.^2
-  A2_xz = -(1.0/b^2)*(b_plus_z_full).*(f_full.*f_x_full)
+  A2_xz = @. -(1.0/b^2)*(b_plus_z_full)*(f_full.*f_x_full)
   A2_zx = A2_xz
-  A2_zz = (1.0/b^2)*((b_plus_z_full).^2).*(f_x_full.^2)
+  A2_zz = @. (1.0/b^2)*((b_plus_z_full).^2)*(f_x_full.^2)
     
   B1_x = -(1.0/b)*f_x_full
   #B1_z = 0
     
-  B2_x = -(1.0/b^2)*f_full.*f_x_full
-  B2_z = (1.0/b^2).*(b_plus_z_full).*(f_x_full.^2)
+  B2_x = @. -(1.0/b^2)*f_full*f_x_full
+  B2_z = @. (1.0/b^2)*(b_plus_z_full)*(f_x_full.^2)
     
   S1 = (2.0/b)*f_full
-  S2 = (1.0/b^2)*f_full.^2
+  S2 = @. (1.0/b^2)*f_full^2
 
   for n=0:N
     for m=0:M
@@ -66,85 +86,84 @@ function field_tfe_helmholtz_m_and_n_lf(xi_lf_n_m,f,p,gammapw,
       
       if(n>=1)
         w_x = dx(wmn[:,:,m+1,n-1+1],p)
-        temp = A1_xx.*w_x
+        temp = @. A1_xx*w_x
         Fnm = Fnm - dx(temp,p)
-        temp = A1_zx.*w_x
+        temp = @. A1_zx*w_x
         Fnm = Fnm - dz(temp,Dz,b)
-        temp = B1_x.*w_x
+        temp = @. B1_x*w_x
         Fnm = Fnm - temp
       
         w_z = dz(wmn[:,:,m+1,n-1+1],Dz,b)
-        temp = A1_xz.*w_z
+        temp = @. A1_xz*w_z
         Fnm = Fnm - dx(temp,p)
         #A1_zz = 0
         #B1_z = 0
       
-        temp = 2*1im*alpha.*S1.*w_x
+        temp = @. 2*1im*alpha*S1*w_x
         Fnm = Fnm - temp
-      temp = (gammaw^2).*S1.*wmn[:,:,m+1,n-1+1]
+      temp = @. (gammaw^2)*S1*wmn[:,:,m+1,n-1+1]
       Fnm = Fnm - temp
       end
     
     if(m>=1)
       w_x = dx(wmn[:,:,m-1+1,n+1],p)
-      temp = 2*1im*alpha.*w_x
+      temp = @. 2*1im*alpha*w_x
       Fnm  = Fnm - temp
-      temp = 2*(gammaw^2).*wmn[:,:,m-1+1,n+1]
+      temp = @. 2*(gammaw^2)*wmn[:,:,m-1+1,n+1]
       Fnm  = Fnm - temp
     end
     
     if(n>=1 && m>=1)
       w_x = dx(wmn[:,:,m-1+1,n-1+1],p)
-      temp = 2*1im*alpha.*S1.*w_x
+      temp = @. 2*1im*alpha*S1*w_x
       Fnm  = Fnm - temp
-      temp = 2*(gammaw^2).*S1.*wmn[:,:,m-1+1,n-1+1]
+      temp = @. 2*(gammaw^2)*S1*wmn[:,:,m-1+1,n-1+1]
       Fnm  = Fnm - temp
     end
     
       if(n>=2)
         w_x = dx(wmn[:,:,m+1,n-2+1],p)
-        temp = A2_xx.*w_x
+        temp = @. A2_xx*w_x
         Fnm = Fnm - dx(temp,p)
-        temp = A2_zx.*w_x
+        temp = @. A2_zx*w_x
         Fnm = Fnm - dz(temp,Dz,b)
-        temp = B2_x.*w_x
+        temp = @. B2_x*w_x
         Fnm = Fnm - temp
       
         w_z = dz(wmn[:,:,m+1,n-2+1],Dz,b)
-        temp = A2_xz.*w_z
+        temp = @. A2_xz*w_z
         Fnm = Fnm - dx(temp,p)
-        temp = A2_zz.*w_z
+        temp = @. A2_zz*w_z
         Fnm = Fnm - dz(temp,Dz,b)
-        temp = B2_z.*w_z
+        temp = @. B2_z*w_z
         Fnm = Fnm - temp
       
-        temp = 2*1im*alpha.*S2.*w_x
+        temp = @. 2*1im*alpha*S2*w_x
         Fnm = Fnm - temp
-      temp = (gammaw^2).*S2.*wmn[:,:,m+1,n-2+1]
+      temp = @. (gammaw^2)*S2*wmn[:,:,m+1,n-2+1]
       Fnm = Fnm - temp
       end
     
       if(m>=2)
-      temp = (gammaw^2).*wmn[:,:,m-2+1,n+1]
+      temp = @. (gammaw^2)*wmn[:,:,m-2+1,n+1]
       Fnm = Fnm - temp
       end
     
       if(n>=1 && m>=2)
-    temp = (gammaw^2).*S1.*wmn[:,:,m-2+1,n-1+1]
-    Fnm = Fnm - temp
+        temp = @. (gammaw^2)*S1*wmn[:,:,m-2+1,n-1+1]
+        Fnm = Fnm - temp
       end
     
       if(n>=2 && m>=1)
-    w_x = dx(wmn[:,:,m-1+1,n-2+1],p)
-    temp = 2*1im*alpha.*S2.*w_x
-    Fnm = Fnm - temp
-    temp = 2*(gammaw^2).*S2.*wmn[:,:,m-1+1,n-2+1]
-    Fnm = Fnm - temp
+        temp = @. 2*1im*alpha*S2*w_x
+        Fnm = Fnm - temp
+        temp = @. 2*(gammaw^2)*S2*wmn[:,:,m-1+1,n-2+1]
+        Fnm = Fnm - temp
       end
     
       if(n>=2 && m>=2)
-    temp = (gammaw^2).*S2.*wmn[:,:,m-2+1,n-2+1]
-    Fnm = Fnm - temp
+        temp = @. (gammaw^2)*S2*wmn[:,:,m-2+1,n-2+1]
+        Fnm = Fnm - temp
       end
 
       for r=0:m-1

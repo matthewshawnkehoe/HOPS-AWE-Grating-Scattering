@@ -1,6 +1,26 @@
 using FFTW
 using LinearAlgebra
 
+"""
+Compute the approximate solution (unm) in the upper field.
+### Input
+- `xi_lf_n_m` -- a tensor representing the partial solution in the upper field
+- `f` -- a test function representing the grating surface
+- `p` -- an integer where tilde_p = (2π/d)p and d is the periodicity of the grating interface
+- `gammap` -- a numerical constant in the upper field for all wave numbers p
+- `alpha` -- a numerical constant
+- `gamma` -- a numerical constant in the upper field 
+- `Dz` -- the partial derivative with respect to the z component
+- `a` -- the artificial boundary imposed at the top of the upper layer
+- `Nx` -- the number of discretization points
+- `Nz` -- the number of collocation points
+- `N` -- the maximum number of Taylor orders for the interfacial perturbation
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+- `identy` -- the identity matrix
+- `alphap` --  a numerical constant at all wave numbers p
+### Output
+- `unm` --  a tensor representing the approximate solution in the upper field
+"""
 function field_tfe_helmholtz_m_and_n(xi_n_m,f,p,gammap,
                 alpha,gamma,Dz,a,Nx,Nz,N,M,identy,alphap)
 
@@ -40,23 +60,23 @@ function field_tfe_helmholtz_m_and_n(xi_n_m,f,p,gammap,
   end
 
   A1_xx = -(2.0/a)*f_full
-  A1_xz = -(1.0/a)*(a_minus_z_full).*f_x_full
+  A1_xz = @. -(1.0/a)*(a_minus_z_full)*f_x_full
   A1_zx = A1_xz
   #A1_zz = 0
     
   A2_xx = (1.0/a^2)*f_full.^2
-  A2_xz = (1.0/a^2)*(a_minus_z_full).*(f_full.*f_x_full)
+  A2_xz = @. (1.0/a^2)*(a_minus_z_full)*(f_full*f_x_full)
   A2_zx = A2_xz
-  A2_zz = (1.0/a^2)*((a_minus_z_full).^2).*(f_x_full.^2)
+  A2_zz = @. (1.0/a^2)*((a_minus_z_full)^2)*(f_x_full^2)
     
   B1_x = (1.0/a)*f_x_full
   #B1_z = 0
     
-  B2_x = -(1.0/a^2)*f_full.*f_x_full
-  B2_z = -(1.0/a^2).*(a_minus_z_full).*(f_x_full.^2)
+  B2_x = @. -(1.0/a^2)*f_full*f_x_full
+  B2_z = @. -(1.0/a^2)*(a_minus_z_full)*(f_x_full^2)
 
   S1 = -(2.0/a)*f_full
-  S2 = (1.0/a^2)*f_full.^2
+  S2 = @. (1.0/a^2)*f_full^2
 
   for n=0:N
     for m=0:M
@@ -67,84 +87,84 @@ function field_tfe_helmholtz_m_and_n(xi_n_m,f,p,gammap,
       
       if(n>=1)
         u_x = dx(unm[:,:,m+1,n-1+1],p)
-        temp = A1_xx.*u_x
+        temp = @. A1_xx*u_x
         Fnm = Fnm - dx(temp,p)
-        temp = A1_zx.*u_x
+        temp = @. A1_zx*u_x
         Fnm = Fnm - dz(temp,Dz,a)
-        temp = B1_x.*u_x
+        temp = @. B1_x*u_x
         Fnm = Fnm - temp
       
         u_z = dz(unm[:,:,m+1,n-1+1],Dz,a)
-        temp = A1_xz.*u_z
+        temp = @. A1_xz*u_z
         Fnm = Fnm - dx(temp,p)
         #A1_zz = 0
         #B1_z = 0
       
-        temp = 2*1im*alpha.*S1.*u_x
+        temp = @. 2*1im*alpha*S1*u_x
         Fnm = Fnm - temp
-        temp = (gamma^2).*S1.*unm[:,:,m+1,n-1+1]
+        temp = @. (gamma^2)*S1*unm[:,:,m+1,n-1+1]
         Fnm = Fnm - temp
       end
     
       if(m>=1)
         u_x = dx(unm[:,:,m-1+1,n+1],p)
-        temp = 2*1im*alpha.*u_x
+        temp = @. 2*1im*alpha*u_x
         Fnm  = Fnm - temp
-        temp = 2*(gamma^2).*unm[:,:,m-1+1,n+1]
+        temp = @. 2*(gamma^2)*unm[:,:,m-1+1,n+1]
         Fnm  = Fnm - temp
       end
     
       if(n>=1 && m>=1)
         u_x = dx(unm[:,:,m-1+1,n-1+1],p)
-        temp = 2*1im*alpha.*S1.*u_x
+        temp = @. 2*1im*alpha*S1*u_x
         Fnm  = Fnm - temp
-        temp = 2*(gamma^2).*S1.*unm[:,:,m-1+1,n-1+1]
+        temp = @. 2*(gamma^2)*S1*unm[:,:,m-1+1,n-1+1]
         Fnm  = Fnm - temp
       end
     
       if(n>=2)
         u_x = dx(unm[:,:,m+1,n-2+1],p)
-        temp = A2_xx.*u_x
+        temp = @. A2_xx*u_x
         Fnm = Fnm - dx(temp,p)
-        temp = A2_zx.*u_x
+        temp = @. A2_zx*u_x
         Fnm = Fnm - dz(temp,Dz,a)
-        temp = B2_x.*u_x
+        temp = @. B2_x*u_x
         Fnm = Fnm - temp
         
         u_z = dz(unm[:,:,m+1,n-2+1],Dz,a)
-        temp = A2_xz.*u_z
+        temp = @. A2_xz*u_z
         Fnm = Fnm - dx(temp,p)
-        temp = A2_zz.*u_z
+        temp = @. A2_zz*u_z
         Fnm = Fnm - dz(temp,Dz,a)
-        temp = B2_z.*u_z
+        temp = @. B2_z*u_z
         Fnm = Fnm - temp
         
-        temp = 2*1im*alpha.*S2.*u_x
+        temp = @. 2*1im*alpha*S2*u_x
         Fnm = Fnm - temp
-        temp = (gamma^2).*S2.*unm[:,:,m+1,n-2+1]
+        temp = @. (gamma^2)*S2*unm[:,:,m+1,n-2+1]
         Fnm = Fnm - temp
       end
       
       if(m>=2)
-        temp = (gamma^2).*unm[:,:,m-2+1,n+1]
+        temp = @. (gamma^2)*unm[:,:,m-2+1,n+1]
         Fnm = Fnm - temp
       end
     
       if(n>=1 && m>=2)
-        temp = (gamma^2).*S1.*unm[:,:,m-2+1,n-1+1]
+        temp = @. (gamma^2)*S1*unm[:,:,m-2+1,n-1+1]
         Fnm = Fnm - temp
       end
     
       if(n>=2 && m>=1)
         u_x = dx(unm[:,:,m-1+1,n-2+1],p)
-        temp = 2*1im*alpha.*S2.*u_x
+        temp = @. 2*1im*alpha*S2*u_x
         Fnm = Fnm - temp
-        temp = 2*(gamma^2).*S2.*unm[:,:,m-1+1,n-2+1]
+        temp = @. 2*(gamma^2)*S2*unm[:,:,m-1+1,n-2+1]
         Fnm = Fnm - temp
       end
     
       if(n>=2 && m>=2)
-        temp = (gamma^2).*S2.*unm[:,:,m-2+1,n-2+1]
+        temp = @. (gamma^2)*S2*unm[:,:,m-2+1,n-2+1]
         Fnm = Fnm - temp
       end
       

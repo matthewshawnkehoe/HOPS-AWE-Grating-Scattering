@@ -262,7 +262,7 @@ function taylorsum_2_coeff(c,Eps,delta,N,M)
         coeff[p+1] = coeff[p+1] + c[p-q+1,q+1]*c1[p-q+1]*c2[q+1]
       end
     end
-
+    
     N_M_min_over_2 = floor(Int, N_M_min/2.0)
 
     if length(c) == 1
@@ -299,7 +299,7 @@ function taylorsum(c,Eps,N)
     end
 
     #p = Poly(c)
-    tsum = polyval(c, Eps)
+    # tsum = polyval(c, Eps)
 
     if length(c) == 1
       return tsum[1]

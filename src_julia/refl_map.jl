@@ -1,7 +1,9 @@
 # refl_map.m
 
 using Printf
-using ProfileView
+using Profile
+using Base.Threads
+using BenchmarkTools
 #using PlotlyJS
 
 # Add the hops functions, setup functions, plot functions, field solvers, dno solvers, two layer solve, and enery defect
@@ -29,7 +31,7 @@ closeall()
 PlotLambda = 1
 PlotRelative = 1
 
-RunNumber = 1
+RunNumber = 100
 
 if(RunNumber==1)
   M = 4; Nx = 16
@@ -42,7 +44,7 @@ elseif(RunNumber==3)
   Eps_Max = 0.1; sigma = 0.5
 elseif(RunNumber==100)
   # HOPS/AWE paper
-  M = 16; Nx = 32
+  M = 15; Nx = 32
   Eps_Max = 0.2; sigma = 0.99
 end
 N = M; Nz = 32
@@ -51,17 +53,17 @@ alpha_bar = 0
 d = 2*pi
 c_0 = 1
 n_u = 1.0
-# n_w = 0.05 + 2.275*1im   #2.3782, Carbon
-n_w = 1.1
+n_w = 0.05 + 2.275*1im   #2.3782, Carbon
+# n_w = 1.1
 # Mode = 1 (TE) or 2 (TM)
 Mode = 2
-Taylor = true
+Taylor = false
 
 N_delta = 100
 N_Eps = 100
 # qq = (1:2)'
-qq = (1)
-# qq = (1:6)'
+# qq = (1)
+qq = (1:6)'
 
 a = 1.0; b = 1.0
 # Nz = Nx
@@ -78,10 +80,10 @@ xx = ((d/Nx)*(0:Nx-1)')'
 #f_x = (pi/d)*cos.(4*pi*xx/d)
 #f = (1/2)*cos.(2*pi*xx/d)
 #f_x = -(2*pi/d)*sin.(2*pi*xx/d)
-# f = cos.(4*xx)
-# f_x = -4*sin.(4*xx)
-f = cos.(xx)
-f_x = -sin.(xx)
+f = cos.(4*xx)
+f_x = -4*sin.(4*xx)
+# f = cos.(xx)
+# f_x = -sin.(xx)
 
 # Sawtooth/Lipschitz
 # P = 40
@@ -105,6 +107,7 @@ else
 end
 
 # Loop over q
+# TODO - Enable multi-threading through adding @threads below?
 for s in eachindex(qq)
   q = qq[s]
   if(N_delta==1)
@@ -138,17 +141,9 @@ for s in eachindex(qq)
     gamma_u_bar_p,gamma_w_bar_p,N,Nx,f,f_x,pp,alpha_bar,
     gamma_u_bar,gamma_w_bar,Dz,a,b,Nz,M,identy,alpha_bar_p)
 
-  # println(U_n_m[8,4,4])
-
   # Correct order of dimensions
   ubar_n_m_upd = permutedims(ubar_n_m,[3 2 1])
   wbar_n_m_upd = permutedims(wbar_n_m,[3 2 1])
-
-  #println(size(ubar_n_m_upd))
-  #println(ubar_n_m_upd[1,1,1])
-  #println(ubar_n_m_upd[2,2,1])
-  #println(wbar_n_m_upd[1,1,1])
-  #println(wbar_n_m_upd[2,2,1])
   
   ee_flat,ru_flat,rl_flat = energy_defect(tau2,ubar_n_m_upd,wbar_n_m_upd,
       d,alpha_bar,gamma_u_bar,gamma_w_bar,Eps,delta,

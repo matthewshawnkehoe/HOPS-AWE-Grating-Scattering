@@ -5,12 +5,12 @@ using LinearSolve
 """
     Compute A_nm as a reference for the field solvers.
 ### Input
-    @param alpha_m - ?
-    @param f_x - ?
-    @param N - ?
-    @param M - ?
+- `alpha_m` -- a numerical constant 
+- `f_x` -- the derivative of a test function in the x component
+- `N` --- the maximum number of Taylor orders for the interfacial perturbation
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
 ### Output
-    @return the value of A_nm
+- `A_nm` -- a numerical constant passed into the field solvers.
 """
 function A_exp(alpha_m,f_x,N,M)
     Nx = length(f_x);
@@ -36,11 +36,19 @@ function A_exp(alpha_m,f_x,N,M)
     return A_nm
 end
 
+
 """
     Compute the inverse of the matrix A.
 ### Input
-    @param Q - ?
+- `Q` -- a numerical approximation of zeta_n_m 
+- `R` -- a numerical approximation of psi_n_m 
+- `gammap` -- a numerical constant in the upper field
+- `gammapw` -- a numerical constant in the lower field
+- `Nx` -- the number of discretization points 
+- `tau2` -- a numerical constant representing TE or TM mode
 ### Output
+- `U` -- a tensor representing the solution in the upper field at the interface
+- `W` -- a tensor representing the solution in the lower field at the interface
 """
 function AInverse(Q,R,gammap,gammapw,Nx,tau2)
     a = zeros(Complex{Float64},Nx,1)
@@ -61,21 +69,25 @@ function AInverse(Q,R,gammap,gammapw,Nx,tau2)
 end
 
 
+"""
+Calculate Chebyshev points.
+"""
 function chebpts(N)
     return cos.((0:N)*pi/N)
 end
+
 
 """
 Compute and return the Chebyshev differentiation matrix.
 Based on Trefethen, Spectral Methods in Matlab, page 54, cheb.m
 
-function [D,x] = cheb(N)
-if N==0, D=0; x=1; return, end
-x = cos(pi*(0:N)/N)';
-c = [2; ones(N-1,1); 2].*(-1)."(0:N)'; X = repmat(x,1,N+1);
-dX = X-X';
-D = (c*(1./c)')./(dX+(eye(N+1)));
-D = D - diag(sum(D'));
+    function [D,x] = cheb(N)
+    if N==0, D=0; x=1; return, end
+    x = cos(pi*(0:N)/N)';
+    c = [2; ones(N-1,1); 2].*(-1)."(0:N)'; X = repmat(x,1,N+1);
+    dX = X-X';
+    D = (c*(1./c)')./(dX+(eye(N+1)));
+    D = D - diag(sum(D'));
 """    
 function cheb(N)
     if N==0
@@ -93,12 +105,29 @@ function cheb(N)
 end
 
 
+"""
+Compute the partial derivative in the x component through the FFT and IFFT.
+### Input
+- `u` -- a tensor representing the approximate solution in a given layer
+- `p` -- an integer where tilde_p = (2π/d)p and d is the periodicity of the grating interface
+### Output
+- `u_x` -- a tensor representing the derivative of the approximate solution in the x component
+"""
 function dx(u,p)
     u_x = ifft((1im*p).*fft(u))  
     return u_x
 end
 
 
+"""
+Compute the partial derivative in the z component.
+### Input
+- `u` -- a tensor representing the approximate solution in a given layer
+- `p` -- an integer where tilde_p = (2π/d)p and d is the periodicity of the grating interface
+- `b` -- the artificial boundary imposed at the bottom of the lower layer
+### Output
+- `u_z` -- a tensor representing the derivative of the approximate solution in the z component
+"""
 function dz(u,Dz,b)
     #u_z = ((2.0/b)*Dz*u')'
     u_z = transpose((2.0/b)*Dz*transpose(u))
@@ -106,6 +135,16 @@ function dz(u,Dz,b)
 end
 
 
+"""
+    Compute E_nm_lf as a reference for the lower field solvers.
+### Input
+- `gamma_m` -- a numerical constant 
+- `f` -- a test function representing the grating surface
+- `N` --- the maximum number of Taylor orders for the interfacial perturbation
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+### Output
+- `E_nm_lf` -- a numerical constant passed into the lower field solvers.
+"""
 function E_exp_lf(gamma_m,f,N,M)
     Nx = length(f)
     E_nm_lf = zeros(Complex{Float64},Nx,M+1,N+1)
@@ -131,6 +170,16 @@ function E_exp_lf(gamma_m,f,N,M)
 end
 
 
+"""
+    Compute E_nm as a reference for the upper field solvers.
+### Input
+- `gamma_m` -- a numerical constant 
+- `f` -- a test function representing the grating surface
+- `N` --- the maximum number of Taylor orders for the interfacial perturbation
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+### Output
+- `E_nm` -- a numerical constant passed into the upper field solvers.
+"""
 function E_exp(gamma_m,f,N,M)
     Nx = length(f)
     E_nm = zeros(Complex{Float64},Nx,M+1,N+1)
@@ -156,6 +205,18 @@ function E_exp(gamma_m,f,N,M)
 end
 
 
+"""
+    Compute gamma_q_m through a series expansion of gamma_q.
+### Input
+- `alpha_bar` -- a numerical constant 
+- `alpha_bar_q` -- a numerical constant generated for all wave numbers q
+- `gamma_bar` -- a numerical constant 
+- `gamma_bar_q` -- a numerical constant generated for all wave numbers q
+- `k_bar` -- a numerical constant
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+### Output
+- `gamma_q_m` -- the series expansion of gamma_q.
+"""
 function gamma_exp(alpha_bar,alpha_bar_q,gamma_bar,gamma_bar_q,k_bar,M)
     gamma_q_m = zeros(Complex{Float64},1,M+1)
     gamma_q_m[0+1] = gamma_bar_q
@@ -180,6 +241,30 @@ function gamma_exp(alpha_bar,alpha_bar_q,gamma_bar,gamma_bar_q,k_bar,M)
 end
 
 
+"""
+Solves the two point boundary value problem by accelerating the 
+classical computation of Ax=b.
+### Input
+- `Uhat` -- fourier transform of tensor representing approximate field solution
+- `b` -- the artificial boundary imposed at the bottom of the lower layer
+- `alpha` -- a numerical constant
+- `beta` -- a numerical constant
+- `gamma` -- a numerical constant
+- `d_min` -- the minimum in the two point BVP for the d component 
+- `n_min` -- the minimum in the two point BVP for the n component 
+- `r_min` -- the minimum in the two point BVP for the r component 
+- `d_max` -- the maximum in the two point BVP for the d component 
+- `n_max` -- the maximum in the two point BVP for the n component
+- `r_max` -- the maximum in the two point BVP for the r component
+- `Nx` -- the number of discretization points
+- `identy` -- the identity matrix
+- `D` -- rescaled Chebyshev differentiation matrix in computational domain
+- `D2` -- square of the matrix D
+- `D_start` -- start of the matrix D
+- `D_end` -- end of the matrix D
+### Output
+- `U_hat` -- fourier transform of the approximate solution in the respective field
+"""
 function solvebvp_colloc_fast(Uhat,b,alpha,beta,gamma,d_min,n_min,
             r_min,d_max,n_max,r_max,Nx,identy,D,D2,D_start,D_end)
 
@@ -211,28 +296,22 @@ function solvebvp_colloc_fast(Uhat,b,alpha,beta,gamma,d_min,n_min,
 end
 
 
+"""
+Calculates the frequency expansions of gamma_p per the
+perbutation in delta. See Diffraction Problems: A HOPS/AWE Method
+section 4.1, (12) - (16).
+# Inputs
+- `alpha` -- a numerical parameter
+- `alphap` -- a numerical parameter calculated at every wave number p
+- `gammap` -- a numerical parameter calculated at every wave number p
+- `k2` -- alphap(0+1)^2 + gammap(0+1)^2
+- `Nx` -- the number of discretization points 
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+# Outputs
+- `T` -- vector resulting from the Taylor expansion of gamma_p
+"""
 function T_dno(alpha,alphap,gamma,gammap,k2,Nx,M)
-    # Tw_dno - Calculates the frequency expansions of gamma_p per the
-    # perbutation in delta. See Diffraction Problems: A HOPS/AWE Method
-    # section 4.1, (12) - (16).
-    #
-    # Inputs:
-    #
-    # alpha - parameter
-    # alphap - alpha + tilde(p) = alpha + (2pi / d) * p
-    # gamma - parameter
-    # gammap - sqrt(k^2 - alpha_p^2) provided p in propogating nodes
-    # k2 - alphap(0+1)^2 + gammap(0+1)^2;
-    # Nx - number of grid points evaluated on x-axis
-    # M - number of iterations for delta pertubation
-    #
-    # Outputs:
-    #
-    # T - Result of taylor expansion of gamma_p
-    #
-    # MSK 4/22/20
 
-    #gammap_m = zeros(Complex{Float64},Nx,M+1)
     # TODO - Will this work?
     gammap_m = zeros(Complex{Float64},Nx,max(M+1,2+1))
     gammap_m[:,0+1] = gammap
@@ -247,6 +326,16 @@ function T_dno(alpha,alphap,gamma,gammap,k2,Nx,M)
     end
 
     T = 1im*gammap_m
+
+    # Necessary?
+    #  for j=1:length(gammap_m)
+    #   val = T[j]
+    #   if imag(val) < 1e-15
+    #     T[j] = real(val)
+    #   else
+    #     T[j] = val
+    #   end
+    # end
 
     return T
 end

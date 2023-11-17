@@ -3,6 +3,28 @@ using FFTW
 # Add fcn_sum_fast from sum_functions.jl
 include("sum_functions.jl")
 
+"""
+Compute the energy defect (D) and inspect the conservation of energy.
+### Input
+- `tau2` --  a numerical constant representing TE or TM mode
+- `ubar_n_m` -- a tensor representing approximate solution in upper layer
+- `wbar_n_m` --  tensor representing approximate solution in lower layer
+- `d` -- the periodicity of the grating
+- `alpha_bar` -- a numerical constant
+- `gamma_u_bar` -- a numerical constant in the upper field
+- `gamma_w_bar` -- a numerical constant in the lower field
+- `Eps` -- the physical error in the surface deformation
+- `delta` -- the numerical error in the discretization of the frequency perbutation
+- `N` -- the maximum number of Taylor orders for the interfacial perturbation
+- `M` -- the maximum number of Taylor orders for the frequency perturbation
+- `N_Eps` -- the maximum number of epsilon orders for the interfacial perturbation
+- `N_Delta` -- the maximum number of delta orders for the frequency perturbation
+- `SumType` -- boolean to control Taylor or Pade summation 
+### Output
+- `ee` -- an estimate of the total energy defect (which should approach 1)
+- `ru` -- proportion of scattered energy in the upper field
+- `rl` -- proportion of scattered energy in the lower field
+"""
 function energy_defect(tau2,ubar_n_m,wbar_n_m, d,alpha_bar,gamma_u_bar,
     gamma_w_bar,Eps,delta,Nx,N,M,N_Eps,N_delta,SumType)
 
@@ -45,9 +67,7 @@ function energy_defect(tau2,ubar_n_m,wbar_n_m, d,alpha_bar,gamma_u_bar,
       @. PropMode_w[alpha_p_2 < real(k_w_2)] = 1
 
       ru[j,ell] = sum(PropMode_u.*B)
-      #println(ru[j,ell])
       rl[j,ell] = tau2*sum(PropMode_w.*C)
-      #println(rl[j,ell])
     end
   end
 

@@ -1,6 +1,21 @@
-# setup_functions.jl
-# Four functions used to setup information in other programs
+# setup_functions.jl: four functions used to setup information in other programs
 
+
+"""
+    Calculates the proper angle values and discretization for the numerical constants
+### Input
+- `Nx` -- -- the number of discretization points 
+- `L` -- the periodicity of the grating surface
+- `alpha` --- a numerical constant
+- `beta` -- a numerical constant
+### Output xx,kk,alphap,betap,eep,eem
+- `xx` -- numerical discretization based on the number of discretization points in Nx
+- `kk` - numerical discretization based on the number of discretization points in Nx
+- `alphap` - numerical constant based on discretization scheme
+- `betap` - numerical constant based on discretization scheme
+- `eep` - numerical constant representing a deviation from in the incidence radiation
+- `eem` - numerical constant representing a deviation from in the incidence radiation
+"""
 function setup_2d(Nx,L,alpha,beta)
     xx = (L/Nx)*(0:Nx-1)
     kk = (2.0*pi/L)*[0:Nx/2-1;-Nx/2:-1]
@@ -48,6 +63,7 @@ function setup_2d(Nx,L,alpha,beta)
 end
 
 
+# TODO: Finish docstrings!
 function setup_xi_u_nu_u_n_m(A,r,xx,pp,alpha_bar_p,
                 gamma_bar_p,f,f_x,Nx,N,M)
     alpha_bar = alpha_bar_p[0+1]

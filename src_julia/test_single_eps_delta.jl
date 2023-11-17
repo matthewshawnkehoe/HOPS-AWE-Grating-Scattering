@@ -37,7 +37,7 @@ RunNumber = 1
 
 if(RunNumber==1)
   M = 8; Nx = 16
-  Eps = 1e-7; sigma = 1e-2
+  Eps = 1e-2; sigma = 1e-2
 elseif(RunNumber==2)
   M = 6; Nx = 24
   Eps = 0.1; sigma = 0.1
