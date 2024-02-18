@@ -56,12 +56,15 @@ B2_z = (1.0/b^2).*(b_plus_z_full).*(f_x_full.^2);
 S1 = (2.0/b)*f_full;
 S2 = (1.0/b^2)*f_full.^2;
 
+% Preallocate Fnm and Qnm
+Fnm = zeros(Nx, Nz+1);
+Qnm = zeros(Nx, 1);
+
 for n=0:N
   for m=0:M
     
-    % Form Fnm, Qnm
-    Fnm = zeros(Nx,Nz+1);
-    Qnm = zeros(Nx,1);
+    Fnm(:) = 0;
+    Qnm(:) = 0;
     
     if(n>=1)
       w_x = dx(wmn(:,:,m+1,n-1+1),p);

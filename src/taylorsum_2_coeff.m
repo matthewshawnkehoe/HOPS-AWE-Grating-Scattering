@@ -19,10 +19,7 @@ function [tsum] = taylorsum_2_coeff(c,Eps,delta,N,M)
 rho = sqrt(Eps^2 + delta^2);
 theta = atan2(delta,Eps);
 
-% Form the ctilde
-
 N_M_min = min(N,M);
-
 coeff = zeros(N_M_min+1,1);
 c1 = cos(theta).^(0:N_M_min);
 c2 = sin(theta).^(0:N_M_min);

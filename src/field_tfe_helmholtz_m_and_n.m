@@ -56,12 +56,15 @@ B2_z = -(1.0/a^2).*(a_minus_z_full).*(f_x_full.^2);
 S1 = -(2.0/a)*f_full;
 S2 = (1.0/a^2)*f_full.^2;
 
+% Preallocate Fnm and Jnm
+Fnm = zeros(Nx, Nz+1);
+Jnm = zeros(Nx, 1);
+
 for n=0:N
   for m=0:M
     
-    % Form Fnm, Jnm
-    Fnm = zeros(Nx,Nz+1);
-    Jnm = zeros(Nx,1);
+    Fnm(:) = 0;
+    Jnm(:) = 0;
     
     if(n>=1)
       u_x = dx(unm(:,:,m+1,n-1+1),p);
