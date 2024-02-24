@@ -18,7 +18,7 @@ elseif(RunNumber==3)
   Eps_Max = 0.1; sigma = 0.5;
 elseif(RunNumber==100)
   % HOPS/AWE paper
-  M = 15; Nx = 32;
+  M = 16; Nx = 32;
   Eps_Max = 0.2; sigma = 0.99;
 end
 N = M; Nz = 32;
@@ -32,11 +32,11 @@ n_w = 1.1;   %2.3782, Carbon
 Mode = 2;
 Taylor = true;
 
-N_delta = 100;
-N_Eps = 100;
+N_delta = 20;
+N_Eps = 20;
 %qq = [1,2];
-%qq = [1];
-qq = [1:6];
+qq = [1];
+%qq = [1:6];
 
 a = 1.0; b = 1.0;
 % Nz = Nx

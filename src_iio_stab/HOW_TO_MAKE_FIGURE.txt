@@ -1,0 +1,6 @@
+% HOW_TO_MAKE_FIGURE
+
+To create Figure 2:
+
+1. Run test_helmholtz_threelayer.m
+2. Run make_plots.m
