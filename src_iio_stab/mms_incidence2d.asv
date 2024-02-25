@@ -115,14 +115,14 @@ temp1 = B_v_r*exp(1i*alphap_r*x).*exp(1i*gamma_vp_r*(hbar+Eps.*fu));
 temp2 = C_v_r*exp(1i*alphap_r*x).*exp(-1i*gamma_vp_r*(hbar+Eps.*fu));
 xi_v = temp1 + temp2;
 nu_v = (1i*gamma_vp_r)*temp1 + (-1i*gamma_vp_r)*temp2...
-    - (1i*alphap_r)*(Eps.*fu_x).*temp1 - (1i*alphap_r)*(Eps.*fu_x).*temp2;
+    - (1i*alphap_r)*(Eps*fu_x).*temp1 - (1i*alphap_r)*(Eps.*fu_x).*temp2;
 V_u = nu_v - 1i*eta*xi_v;
 Vtilde_u = nu_v + 1i*eta*xi_v;
 temp5 = B_v_r*exp(1i*alphap_r*x).*exp(1i*gamma_vp_r*(-hbar+Eps.*fell));
 temp6 = C_v_r*exp(1i*alphap_r*x).*exp(-1i*gamma_vp_r*(-hbar+Eps.*fell));
 zeta_v = temp5 + temp6;
 psi_v = -(1i*gamma_vp_r)*temp5 - (-1i*gamma_vp_r)*temp6...
-    + (1i*alphap_r)*(Eps.*fell_x).*temp5 + (1i*alphap_r)*(Eps.*fell_x).*temp6;
+    + (1i*alphap_r)*(Eps*fell_x).*temp5 + (1i*alphap_r)*(Eps.*fell_x).*temp6;
 V_ell = psi_v - 1i*eta*zeta_v;
 Vtilde_ell = psi_v + 1i*eta*zeta_v;
 
