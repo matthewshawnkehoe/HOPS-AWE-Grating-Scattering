@@ -5,7 +5,7 @@ clear all; close all;
 PlotLambda = 1;
 PlotRelative = 1;
 
-RunNumber = 100;
+RunNumber = 1;
 
 if(RunNumber==1)
   N = 4; Nx = 16;
@@ -21,13 +21,14 @@ elseif(RunNumber==100)
   N = 16; Nx = 32;
   Eps_Max = 0.2; sigma = 0.99;
 end
+M=0;
 Nz = 32;
 
 alpha_bar = 0;
 h_bar = 0.333; % What should this be?
-gamma_u = 1.21;
-gamma_v = 1.97;
-gamma_w = 2.23;
+gamma_u_bar = 1.21;
+gamma_v_bar = 1.97;
+gamma_w_bar = 2.23;
 d = 2*pi;
 c_0 = 1;
 n_u = 1.0;
@@ -50,9 +51,9 @@ identy = eye(Nz+1);
 Eps = linspace(0,Eps_Max,N_Eps);
 
 L = 2*pi;
-k_u = sqrt(alpha_bar^2 + gamma_u^2);
-k_v = sqrt(alpha_bar^2 + gamma_v^2);
-k_w = sqrt(alpha_bar^2 + gamma_w^2);
+k_u = sqrt(alpha_bar^2 + gamma_u_bar^2);
+k_v = sqrt(alpha_bar^2 + gamma_v_bar^2);
+k_w = sqrt(alpha_bar^2 + gamma_w_bar^2);
 eta = (k_u+k_v+k_w)/3.0;
 if(Mode==1)
   tau2 = 1.0;
@@ -63,9 +64,9 @@ else
 end
 
 % Create alphap, gamma_p, eep, and eem
-[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_u);
-[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_v);
-[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_w);
+[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_u_bar);
+[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_v_bar);
+[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_w_bar);
 
 % Test functions
 fu = cos(2*x);
@@ -115,29 +116,35 @@ for s=1:length(qq)
       h_bar,eta,fu,fell,tau2,sigma2,p,alphap,gamma_up,gamma_vp,gamma_wp,...
       eep,eem,a,b,Nx,Nz,N);
   toc;
+
+  % Correct order of dimensions - why do we need to do this?
+  U_n_tfe = permute(U_n_tfe,[2 1]);
+  V_n_u_tfe = permute(V_n_u_tfe,[2 1]);
+  V_n_ell_tfe = permute(V_n_ell_tfe,[2 1]);
+  W_n_tfe = permute(W_n_tfe,[2 1]);
   
   [ee_flat,ru_flat,rl_flat] ...
-      = energy_defect(tau2,ubar_n_m_upd,wbar_n_m_upd,...
-      d,alpha_bar,gamma_u_bar,gamma_w_bar,Eps,delta,...
+      = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+      d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
       Nx,0,0,N_Eps,N_delta,1);
   
   % Don't compute pade_sum unless Taylor is false
   if Taylor == true
     [ee_taylor,ru_taylor,rl_taylor] ...
-        = energy_defect(tau2,ubar_n_m_upd,wbar_n_m_upd,...
-        d,alpha_bar,gamma_u_bar,gamma_w_bar,Eps,delta,...
+        = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
         Nx,N,M,N_Eps,N_delta,1);
   else
     [ee_pade,ru_pade,rl_pade] ...
-        = energy_defect(tau2,ubar_n_m_upd,wbar_n_m_upd,...
-        d,alpha_bar,gamma_u_bar,gamma_w_bar,Eps,delta,...
+        = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
         Nx,N,M,N_Eps,N_delta,2);
   end
   
   % We aren't currently testing pade_safe
   % [ee_pade_safe,ru_pade_safe,rl_pade_safe] ...
-  %     = energy_defect(tau2,ubar_n_m_upd,wbar_n_m_upd,...
-  %     d,alpha_bar,gamma_u_bar,gamma_w_bar,Eps,delta,...
+  %     = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+  %     d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
   %     Nx,N,M,N_Eps,N_delta,3);
   
   % Plot the energy defect (log10)
