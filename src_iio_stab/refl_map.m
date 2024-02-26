@@ -21,7 +21,6 @@ elseif(RunNumber==100)
   N = 16; Nx = 32;
   Eps_Max = 0.2; sigma = 0.99;
 end
-M=0;
 Nz = 32;
 
 alpha_bar = 0;
@@ -37,8 +36,8 @@ n_w = 1.1;   %2.3782, Carbon
 Mode = 2;
 Taylor = true;
 
-N_delta = 20;
 N_Eps = 20;
+N_delta = 20;
 %qq = [1,2];
 qq = [1];
 %qq = [1:6];
@@ -74,12 +73,12 @@ fell = sin(2*x);
 fu_x = real(ifft( (1i*p).*fft(fu) ));
 fell_x = real(ifft( (1i*p).*fft(fell) ));
 
-
 % Loop over q
+R_taylor = zeros(N_Eps,1);
+R_pade = zeros(N_Eps,1);
+R_pade_safe = zeros(N_Eps,1);
 
-R_taylor = zeros(N_Eps,N_delta);
-R_pade = zeros(N_Eps,N_delta);
-R_pade_safe = zeros(N_Eps,N_delta);
+h_bar = pi/gamma_v_bar + tau2;
 
 for s=1:length(qq)
   q = qq(s);
@@ -88,7 +87,6 @@ for s=1:length(qq)
   else
     delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta);
   end
-  
   omega_bar = c_0*(2*pi/d)*(q + 0.5);
   omega = (1+delta)*omega_bar;
   lambda = (2*pi*c_0./omega);
@@ -125,27 +123,27 @@ for s=1:length(qq)
   
   [ee_flat,ru_flat,rl_flat] ...
       = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-      d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
-      Nx,0,0,N_Eps,N_delta,1);
+      d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+      Nx,0,N_Eps,1);
   
   % Don't compute pade_sum unless Taylor is false
   if Taylor == true
     [ee_taylor,ru_taylor,rl_taylor] ...
         = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
-        Nx,N,M,N_Eps,N_delta,1);
+        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+        Nx,N,N_Eps,1);
   else
     [ee_pade,ru_pade,rl_pade] ...
         = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
-        Nx,N,M,N_Eps,N_delta,2);
+        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+        Nx,N,N_Eps,2);
   end
   
   % We aren't currently testing pade_safe
   % [ee_pade_safe,ru_pade_safe,rl_pade_safe] ...
   %     = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-  %     d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,delta,...
-  %     Nx,N,M,N_Eps,N_delta,3);
+  %     d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+  %     Nx,N,N_Eps,3);
   
   % Plot the energy defect (log10)
   
@@ -170,30 +168,30 @@ for s=1:length(qq)
   title('$D$','interpreter','latex','FontSize',18);
   colorbar; colormap hot;
 
-
-  figure(2);
-  set(gca,'FontSize',12);
-  if(PlotRelative==0)
-    if(Taylor == true)
-      RR = ru_taylor;
-    else
-      RR = ru_pade;
-    end
-  else
-    if(Taylor == true)
-      RR = ru_taylor./ru_flat;
-    else
-      RR = ru_pade./ru_flat;  
-    end
-  end
-  if(PlotLambda==0)
-    contourf(omega,Eps,RR); hold on;
-    xlabel('$\omega$','interpreter','latex','FontSize',18);
-  else
-    contourf(lambda,Eps,RR); hold on;
-    xlabel('$\lambda$','interpreter','latex','FontSize',18);
-  end
-  ylabel('$\varepsilon$','interpreter','latex','FontSize',20);
-  title('$R$','interpreter','latex','FontSize',18);
-  colorbar; colormap hot;
+  % 
+  % figure(2);
+  % set(gca,'FontSize',12);
+  % if(PlotRelative==0)
+  %   if(Taylor == true)
+  %     RR = ru_taylor;
+  %   else
+  %     RR = ru_pade;
+  %   end
+  % else
+  %   if(Taylor == true)
+  %     RR = ru_taylor./ru_flat;
+  %   else
+  %     RR = ru_pade./ru_flat;  
+  %   end
+  % end
+  % if(PlotLambda==0)
+  %   contourf(omega,h_bar,RR); hold on;
+  %   xlabel('$\omega$','interpreter','latex','FontSize',18);
+  % else
+  %   contourf(lambda,h_bar,RR); hold on;
+  %   xlabel('$\lambda$','interpreter','latex','FontSize',18);
+  % end
+  % ylabel('$\varepsilon$','interpreter','latex','FontSize',20);
+  % title('$R$','interpreter','latex','FontSize',18);
+  % colorbar; colormap hot;
 end
