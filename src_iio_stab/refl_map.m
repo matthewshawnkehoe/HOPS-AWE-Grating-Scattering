@@ -147,51 +147,52 @@ for s=1:length(qq)
   
   % Plot the energy defect (log10)
   
-  figure(1);
-  set(gca,'FontSize',12);
-  if(PlotLambda==0)
-    if(Taylor == true)
-      contourf(omega,Eps,log10(abs(ee_taylor))); hold on;
-    else
-      contourf(omega,Eps,log10(abs(ee_pade))); hold on;
-    end
-      xlabel('$\omega$','interpreter','latex','FontSize',18);
-  else
-    if(Taylor == true)
-      contourf(lambda,Eps,log10(abs(ee_taylor))); hold on;
-    else
-      contourf(lambda,Eps,log10(abs(ee_pade))); hold on;
-    end
-    xlabel('$\lambda$','interpreter','latex','FontSize',18);
-  end
-  ylabel('$\varepsilon$','interpreter','latex','FontSize',20);
-  title('$D$','interpreter','latex','FontSize',18);
-  colorbar; colormap hot;
-
-  % 
-  % figure(2);
+  % figure(1);
   % set(gca,'FontSize',12);
-  % if(PlotRelative==0)
-  %   if(Taylor == true)
-  %     RR = ru_taylor;
-  %   else
-  %     RR = ru_pade;
-  %   end
-  % else
-  %   if(Taylor == true)
-  %     RR = ru_taylor./ru_flat;
-  %   else
-  %     RR = ru_pade./ru_flat;  
-  %   end
-  % end
   % if(PlotLambda==0)
-  %   contourf(omega,h_bar,RR); hold on;
-  %   xlabel('$\omega$','interpreter','latex','FontSize',18);
+  %   if(Taylor == true)
+  %     contourf(omega,Eps,log10(abs(ee_taylor))); hold on;
+  %   else
+  %     contourf(omega,Eps,log10(abs(ee_pade))); hold on;
+  %   end
+  %     xlabel('$\omega$','interpreter','latex','FontSize',18);
   % else
-  %   contourf(lambda,h_bar,RR); hold on;
+  %   if(Taylor == true)
+  %     contourf(lambda,Eps,log10(abs(ee_taylor))); hold on;
+  %   else
+  %     contourf(lambda,Eps,log10(abs(ee_pade))); hold on;
+  %   end
   %   xlabel('$\lambda$','interpreter','latex','FontSize',18);
   % end
   % ylabel('$\varepsilon$','interpreter','latex','FontSize',20);
-  % title('$R$','interpreter','latex','FontSize',18);
+  % title('$D$','interpreter','latex','FontSize',18);
   % colorbar; colormap hot;
+
+  % 
+  figure(2);
+  set(gca,'FontSize',12);
+  if(PlotRelative==0)
+    if(Taylor == true)
+      RR = ru_taylor;
+    else
+      RR = ru_pade;
+    end
+  else
+    if(Taylor == true)
+      RR = ru_taylor./ru_flat;
+    else
+      RR = ru_pade./ru_flat;  
+    end
+  end
+  if(PlotLambda==0)
+    contourf(omega,Eps,RR); hold on;
+    xlabel('$\omega$','interpreter','latex','FontSize',18);
+  else
+    RR = repmat(RR, 1, size(RR,1));
+    contourf(lambda,Eps,RR); hold on;
+    xlabel('$\lambda$','interpreter','latex','FontSize',18);
+  end
+  ylabel('$\varepsilon$','interpreter','latex','FontSize',20);
+  title('$R$','interpreter','latex','FontSize',18);
+  colorbar; colormap hot;
 end

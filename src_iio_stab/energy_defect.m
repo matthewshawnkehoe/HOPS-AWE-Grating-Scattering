@@ -49,7 +49,7 @@ for j=1:N_Eps
 end
 
 
-%ee = 1.0 - ru - rl;
-ee = 1.0 - ru - rv - rl;
+ee = 1.0 - ru - rl;
+%ee = 1.0 - ru - rv - rl;
 
 return;
