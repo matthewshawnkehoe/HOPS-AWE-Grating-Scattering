@@ -11,15 +11,16 @@ Eps_values = [0.005, 0.01, 0.05, 0.1];
 % Mode=1/2: TE/TM
 Mode = 2;
 L = 2*pi;
-alpha = 0.0;
+alpha = 0.1;
+beta = 0.2;
 hbar = 0.333;
 gamma_u = 1.21;
 gamma_v = 1.97;
 gamma_w = 2.23;
 Nx = 64;
 Nz = 16;
-a = 0.1;
-b = 0.1;
+a = 0.5;
+b = 0.5;
 N = 10;
 k_u = sqrt(alpha^2 + gamma_u^2);
 k_v = sqrt(alpha^2 + gamma_v^2);
@@ -34,9 +35,9 @@ else
 end
 
 % Create alphap, gamma_p, eep, and eem
-[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha,gamma_u);
-[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha,gamma_v);
-[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha,gamma_w);
+[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha,beta);
+[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha,beta);
+[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha,beta);
 
 % Test functions
 fu = cos(2*x);

@@ -5,7 +5,7 @@ clear all; close all;
 PlotLambda = 1;
 PlotRelative = 1;
 
-RunNumber = 1;
+RunNumber = 100;
 
 if(RunNumber==1)
   N = 4; Nx = 16;
@@ -36,8 +36,8 @@ n_w = 1.1;   %2.3782, Carbon
 Mode = 2;
 Taylor = true;
 
-N_Eps = 20;
-N_delta = 20;
+N_Eps = 100;
+N_delta = 100;
 %qq = [1,2];
 qq = [1];
 %qq = [1:6];
@@ -68,8 +68,8 @@ end
 [x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_w_bar);
 
 % Test functions
-fu = cos(2*x);
-fell = sin(2*x);
+fu = (1/4)*cos(2*pi*x/d);
+fell = (1/4)*cos(2*pi*x/d);
 fu_x = real(ifft( (1i*p).*fft(fu) ));
 fell_x = real(ifft( (1i*p).*fft(fell) ));
 
@@ -188,7 +188,7 @@ for s=1:length(qq)
     contourf(omega,Eps,RR); hold on;
     xlabel('$\omega$','interpreter','latex','FontSize',18);
   else
-    RR = repmat(RR, 1, size(RR,1));
+    RR = repmat(RR, 1, size(RR,1)); % How to fix this?
     contourf(lambda,Eps,RR); hold on;
     xlabel('$\lambda$','interpreter','latex','FontSize',18);
   end
