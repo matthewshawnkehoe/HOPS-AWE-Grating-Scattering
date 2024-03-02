@@ -17,13 +17,14 @@ elseif(RunNumber==3)
   N = 8; Nx = 32;
   Eps_Max = 0.1; sigma = 0.5;
 elseif(RunNumber==100)
-  % HOPS/AWE paper
-  N = 16; Nx = 32;
+  % IIO Stability paper
+  N = 16; Nx = 24;
   Eps_Max = 0.2; sigma = 0.99;
 end
 Nz = 32;
 
 alpha_bar = 0;
+beta_bar = 0;
 h_bar = 0.333; % What should this be?
 gamma_u_bar = 1.21;
 gamma_v_bar = 1.97;
@@ -85,7 +86,7 @@ for s=1:length(qq)
   if(N_delta==1)
     delta = [0];
   else
-    delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta);
+    delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta); % Delete delta dependence?
   end
   omega_bar = c_0*(2*pi/d)*(q + 0.5);
   omega = (1+delta)*omega_bar;
