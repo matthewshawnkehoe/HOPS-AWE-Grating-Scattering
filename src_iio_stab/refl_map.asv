@@ -30,7 +30,7 @@ gamma_u_bar = 1.21;
 gamma_v_bar = 1.97;
 gamma_w_bar = 2.23;
 d = 2*pi;
-c_0 = 1;
+c_0 = 100;
 n_u = 1.0;
 n_w = 1.1;   %2.3782, Carbon
 % Mode = 1 (TE) or 2 (TM)
@@ -86,7 +86,7 @@ for s=1:length(qq)
   if(N_delta==1)
     delta = [0];
   else
-    delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta);
+    delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta); % Delete delta dependence?
   end
   omega_bar = c_0*(2*pi/d)*(q + 0.5);
   omega = (1+delta)*omega_bar;
