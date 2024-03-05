@@ -37,7 +37,6 @@ Mode = 2;
 Taylor = true;
 
 N_Eps = 100;
-N_delta = 100;
 %qq = [1,2];
 qq = [1];
 %qq = [1:6];
@@ -49,7 +48,8 @@ identy = eye(Nz+1);
 
 Eps = linspace(0,Eps_Max,N_Eps);
 
-L = 2*pi;
+d_x = 0.65;
+d_y = 0.65;
 k_u = sqrt(alpha^2 + gamma_u^2);
 k_v = sqrt(alpha^2 + gamma_v^2);
 k_w = sqrt(alpha^2 + gamma_w^2);
@@ -63,16 +63,16 @@ else
 end
 
 % Create alphap, gamma_p, eep, and eem
-[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha,gamma_u);
-[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha,gamma_v);
-[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha,gamma_w);
-[y,p,alphap,gamma_up,eep,eem] = setup_2d(Ny,L,alpha,gamma_u);
-[y,p,alphap,gamma_vp,eep,eem] = setup_2d(Ny,L,alpha,gamma_v);
-[y,p,alphap,gamma_wp,eep,eem] = setup_2d(Ny,L,alpha,gamma_w);
+[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,d_x,alpha,gamma_u);
+[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,d_x,alpha,gamma_v);
+[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,d_x,alpha,gamma_w);
+[y,p,alphap,gamma_up,eep,eem] = setup_2d(Ny,d_y,alpha,gamma_u);
+[y,p,alphap,gamma_vp,eep,eem] = setup_2d(Ny,d_y,alpha,gamma_v);
+[y,p,alphap,gamma_wp,eep,eem] = setup_2d(Ny,d_y,alpha,gamma_w);
 
 % Test functions
-fu = (1/4) * (cos(2*pi*x/L) + cos(2*pi*y/L));
-fell = (1/4) * (cos(2*pi*x/L) + cos(2*pi*y/L));
+fu = (1/4) * (cos(2*pi*x/d_x) + cos(2*pi*y/d_x));
+fell = (1/4) * (cos(2*pi*x/d_x) + cos(2*pi*y/d_x));
 fu_x = real(ifft( (1i*p).*fft(fu) ));
 fell_x = real(ifft( (1i*p).*fft(fell) ));
 
@@ -85,14 +85,9 @@ h_bar = pi/gamma_v + 10^(-16);
 
 for s=1:length(qq)
   q = qq(s);
-  if(N_delta==1)
-    delta = [0];
-  else
-    delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta); % Delete delta dependence?
-  end
-  omega_bar = c_0*(2*pi/L)*(q + 0.5);
-  omega = (1+delta)*omega_bar;
-  lambda = (2*pi*c_0./omega);
+  omega = c_0*(2*pi/d_x)*(q + 0.5);
+  lambda = linspace(2*pi*c_0/omega,(2*pi*c_0./omega)+0.25,N_Eps) ;
+  lambda = lambda * 10^3;
 
   tic;
   [U_n,Utilde_n,U,Utilde,V_u_n,Vtilde_u_n,V_u,Vtilde_u,...
@@ -126,19 +121,19 @@ for s=1:length(qq)
   
   [ee_flat,ru_flat,rl_flat] ...
       = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-      L,alpha,gamma_u,gamma_v,gamma_w,Eps,...
+      d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
       Nx,0,N_Eps,1);
   
   % Don't compute pade_sum unless Taylor is false
   if Taylor == true
     [ee_taylor,ru_taylor,rl_taylor] ...
         = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        L,alpha,gamma_u,gamma_v,gamma_w,Eps,...
+        d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
         Nx,N,N_Eps,1);
   else
     [ee_pade,ru_pade,rl_pade] ...
         = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        L,alpha,gamma_u,gamma_v,gamma_w,Eps,...
+        d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
         Nx,N,N_Eps,2);
   end
   
@@ -189,13 +184,13 @@ for s=1:length(qq)
   end
   if(PlotLambda==0)
     contourf(omega,Eps,RR); hold on;
-    xlabel('$\omega$','interpreter','latex','FontSize',18);
+    xlabel('$\omega$ (nm)','interpreter','latex','FontSize',18);
   else
     RR = repmat(RR, 1, size(RR,1)); % How to fix this?
     contourf(lambda,Eps,RR); hold on;
-    xlabel('$\lambda$','interpreter','latex','FontSize',18);
+    xlabel('$\lambda$ (nm)','interpreter','latex','FontSize',18);
   end
-  ylabel('$\varepsilon$','interpreter','latex','FontSize',20);
+  ylabel('$h$ (nm)','interpreter','latex','FontSize',20);
   title('$R$','interpreter','latex','FontSize',18);
   colorbar; colormap hot;
 end

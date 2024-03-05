@@ -21,16 +21,15 @@ elseif(RunNumber==100)
   N = 16; Nx = 24;
   Eps_Max = 0.2; sigma = 0.99;
 end
+Ny = Nx;
 Nz = 32;
 
-alpha_bar = 0;
-beta_bar = 0;
-h_bar = 0.333; % What should this be?
-gamma_u_bar = 1.21;
-gamma_v_bar = 1.97;
-gamma_w_bar = 2.23;
-d = 2*pi;
-c_0 = 100;
+alpha = 0;
+beta = 0;
+gamma_u = 1.21;
+gamma_v = 1.97;
+gamma_w = 2.23;
+c_0 = 1;
 n_u = 1.0;
 n_w = 1.1;   %2.3782, Carbon
 % Mode = 1 (TE) or 2 (TM)
@@ -38,7 +37,6 @@ Mode = 2;
 Taylor = true;
 
 N_Eps = 100;
-N_delta = 100;
 %qq = [1,2];
 qq = [1];
 %qq = [1:6];
@@ -51,9 +49,9 @@ identy = eye(Nz+1);
 Eps = linspace(0,Eps_Max,N_Eps);
 
 L = 2*pi;
-k_u = sqrt(alpha_bar^2 + gamma_u_bar^2);
-k_v = sqrt(alpha_bar^2 + gamma_v_bar^2);
-k_w = sqrt(alpha_bar^2 + gamma_w_bar^2);
+k_u = sqrt(alpha^2 + gamma_u^2);
+k_v = sqrt(alpha^2 + gamma_v^2);
+k_w = sqrt(alpha^2 + gamma_w^2);
 eta = (k_u+k_v+k_w)/3.0;
 if(Mode==1)
   tau2 = 1.0;
@@ -64,13 +62,16 @@ else
 end
 
 % Create alphap, gamma_p, eep, and eem
-[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_u_bar);
-[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_v_bar);
-[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha_bar,gamma_w_bar);
+[x,p,alphap,gamma_up,eep,eem] = setup_2d(Nx,L,alpha,gamma_u);
+[x,p,alphap,gamma_vp,eep,eem] = setup_2d(Nx,L,alpha,gamma_v);
+[x,p,alphap,gamma_wp,eep,eem] = setup_2d(Nx,L,alpha,gamma_w);
+[y,p,alphap,gamma_up,eep,eem] = setup_2d(Ny,L,alpha,gamma_u);
+[y,p,alphap,gamma_vp,eep,eem] = setup_2d(Ny,L,alpha,gamma_v);
+[y,p,alphap,gamma_wp,eep,eem] = setup_2d(Ny,L,alpha,gamma_w);
 
 % Test functions
-fu = (1/4)*cos(2*pi*x/d);
-fell = (1/4)*cos(2*pi*x/d);
+fu = (1/4) * (cos(2*pi*x/L) + cos(2*pi*y/L));
+fell = (1/4) * (cos(2*pi*x/L) + cos(2*pi*y/L));
 fu_x = real(ifft( (1i*p).*fft(fu) ));
 fell_x = real(ifft( (1i*p).*fft(fell) ));
 
@@ -79,17 +80,11 @@ R_taylor = zeros(N_Eps,1);
 R_pade = zeros(N_Eps,1);
 R_pade_safe = zeros(N_Eps,1);
 
-h_bar = pi/gamma_v_bar + tau2;
+h_bar = pi/gamma_v + 10^(-16);
 
 for s=1:length(qq)
   q = qq(s);
-  if(N_delta==1)
-    delta = [0];
-  else
-    delta = linspace(-sigma/(2*q+1),sigma/(2*q+1),N_delta); % Delete delta dependence?
-  end
-  omega_bar = c_0*(2*pi/d)*(q + 0.5);
-  omega = (1+delta)*omega_bar;
+  omega = c_0*(2*pi/L)*(q + 0.5);
   lambda = (2*pi*c_0./omega);
 
   tic;
@@ -124,19 +119,19 @@ for s=1:length(qq)
   
   [ee_flat,ru_flat,rl_flat] ...
       = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-      d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+      L,alpha,gamma_u,gamma_v,gamma_w,Eps,...
       Nx,0,N_Eps,1);
   
   % Don't compute pade_sum unless Taylor is false
   if Taylor == true
     [ee_taylor,ru_taylor,rl_taylor] ...
         = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+        L,alpha,gamma_u,gamma_v,gamma_w,Eps,...
         Nx,N,N_Eps,1);
   else
     [ee_pade,ru_pade,rl_pade] ...
         = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        d,alpha_bar,gamma_u_bar,gamma_v_bar,gamma_w_bar,Eps,...
+        L,alpha,gamma_u,gamma_v,gamma_w,Eps,...
         Nx,N,N_Eps,2);
   end
   
