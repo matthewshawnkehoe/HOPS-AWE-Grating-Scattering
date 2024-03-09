@@ -41,8 +41,7 @@ N_Eps = 100;
 qq = [1];
 %qq = [1:6];
 
-a = 1.0; b = 1.0;
-% Nz = Nx
+a = 0.5; b = 0.5;
 identy = eye(Nz+1);
 [Dz,z] = cheb(Nz);
 
@@ -86,8 +85,17 @@ h_bar = pi/gamma_v + 10^(-16);
 for s=1:length(qq)
   q = qq(s);
   omega = c_0*(2*pi/d_x)*(q + 0.5);
-  lambda = linspace(2*pi*c_0/omega,(2*pi*c_0./omega)+0.25,N_Eps) ;
-  lambda = lambda * 10^3;
+  lambda = linspace(2*pi*c_0/omega+0.125,(2*pi*c_0./omega)+0.3,N_Eps);
+
+  k_u = n_u*omega/c_0;
+  gamma_u_bar = sqrt(k_u^2 - alpha^2);
+  [x,p,alphap,gamma_up,eep,eem] ...
+      = setup_2d(Nx,d_x,alpha,gamma_u);
+
+  k_w = n_w*omega/c_0;
+  gamma_w = sqrt(k_w^2 - alpha^2);
+  [x,p,alphap,gamma_wp,eep,eem] ...
+      = setup_2d(Nx,d_x,alpha,gamma_w);
 
   tic;
   [U_n,Utilde_n,U,Utilde,V_u_n,Vtilde_u_n,V_u,Vtilde_u,...
