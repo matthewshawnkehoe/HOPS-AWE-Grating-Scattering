@@ -98,53 +98,58 @@ for s=1:length(qq)
       = setup_2d(Nx,d_x,alpha,gamma_w);
 
   tic;
-  [U_n,Utilde_n,U,Utilde,V_u_n,Vtilde_u_n,V_u,Vtilde_u,...
-      V_ell_n,Vtilde_ell_n,V_ell,Vtilde_ell,W_n,Wtilde_n,W,Wtilde] ...
-      = mms_incidence2d(h_bar,eta,fu,fu_x,fell,fell_x,x,...
-      alphap,gamma_up,gamma_vp,gamma_wp,Nx,N,Eps);
+  for N = 0:16
+    [U_n,Utilde_n,U,Utilde,V_u_n,Vtilde_u_n,V_u,Vtilde_u,...
+       V_ell_n,Vtilde_ell_n,V_ell,Vtilde_ell,W_n,Wtilde_n,W,Wtilde] ...
+       = mms_incidence2d(h_bar,eta,fu,fu_x,fell,fell_x,x,...
+         alphap,gamma_up,gamma_vp,gamma_wp,Nx,N,Eps);
+    
+    if(Mode==1)
+      zeta_n = (U_n - Utilde_n - V_u_n + Vtilde_u_n)/(-2*1i*eta);
+      psi_n = (U_n + Utilde_n + V_u_n + Vtilde_u_n)/(-2);
+      theta_n = (V_ell_n - Vtilde_ell_n - W_n + Wtilde_n)/(-2*1i*eta);
+      mu_n = (V_ell_n + Vtilde_ell_n + W_n + Wtilde_n)/(-2);
+    else
+      zeta_n = (U_n - Utilde_n - V_u_n + Vtilde_u_n)/(-2*1i*eta);
+      psi_n = (U_n + Utilde_n + tau2*V_u_n + tau2*Vtilde_u_n)/(-2);
+      theta_n = (V_ell_n - Vtilde_ell_n - W_n + Wtilde_n)/(-2*1i*eta);
+      mu_n = (V_ell_n + Vtilde_ell_n + sigma2*W_n + sigma2*Wtilde_n)/(-2);
+    end
+    
+    [U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe] ...
+        = threelayer_iio_tfe_helmholtz(zeta_n,psi_n,theta_n,mu_n,...
+        h_bar,eta,fu,fell,tau2,sigma2,p,alphap,gamma_up,gamma_vp,gamma_wp,...
+        eep,eem,a,b,Nx,Nz,N);
+    
+    % Correct order of dimensions - why do we need to do this?
+    U_n_tfe = permute(U_n_tfe,[2 1]);
+    V_n_u_tfe = permute(V_n_u_tfe,[2 1]);
+    V_n_ell_tfe = permute(V_n_ell_tfe,[2 1]);
+    W_n_tfe = permute(W_n_tfe,[2 1]);
+      
+    [ee_flat,ru_flat,rl_flat] ...
+        = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+        d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
+        Nx,0,N_Eps,1);
+      
+    % Don't compute pade_sum unless Taylor is false
+    if Taylor == true
+      [ee_taylor,ru_taylor,rl_taylor] ...
+          = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+          d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
+            Nx,N,N_Eps,1);
+    else
+      [ee_pade,ru_pade,rl_pade] ...
+          = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
+          d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
+          Nx,N,N_Eps,2);
+    end
 
-  if(Mode==1)
-    zeta_n = (U_n - Utilde_n - V_u_n + Vtilde_u_n)/(-2*1i*eta);
-    psi_n = (U_n + Utilde_n + V_u_n + Vtilde_u_n)/(-2);
-    theta_n = (V_ell_n - Vtilde_ell_n - W_n + Wtilde_n)/(-2*1i*eta);
-    mu_n = (V_ell_n + Vtilde_ell_n + W_n + Wtilde_n)/(-2);
-  else
-    zeta_n = (U_n - Utilde_n - V_u_n + Vtilde_u_n)/(-2*1i*eta);
-    psi_n = (U_n + Utilde_n + tau2*V_u_n + tau2*Vtilde_u_n)/(-2);
-    theta_n = (V_ell_n - Vtilde_ell_n - W_n + Wtilde_n)/(-2*1i*eta);
-    mu_n = (V_ell_n + Vtilde_ell_n + sigma2*W_n + sigma2*Wtilde_n)/(-2);
+    ee_taylor_all(:,:,N+1) = ee_taylor;
+    ru_taylor_all(:,N+1) = ru_taylor;
+    rl_taylor_all(:,N+1) = rl_taylor;
   end
-
-  [U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe] ...
-      = threelayer_iio_tfe_helmholtz(zeta_n,psi_n,theta_n,mu_n,...
-      h_bar,eta,fu,fell,tau2,sigma2,p,alphap,gamma_up,gamma_vp,gamma_wp,...
-      eep,eem,a,b,Nx,Nz,N);
   toc;
-
-  % Correct order of dimensions - why do we need to do this?
-  U_n_tfe = permute(U_n_tfe,[2 1]);
-  V_n_u_tfe = permute(V_n_u_tfe,[2 1]);
-  V_n_ell_tfe = permute(V_n_ell_tfe,[2 1]);
-  W_n_tfe = permute(W_n_tfe,[2 1]);
-  
-  [ee_flat,ru_flat,rl_flat] ...
-      = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-      d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
-      Nx,0,N_Eps,1);
-  
-  % Don't compute pade_sum unless Taylor is false
-  if Taylor == true
-    [ee_taylor,ru_taylor,rl_taylor] ...
-        = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
-        Nx,N,N_Eps,1);
-  else
-    [ee_pade,ru_pade,rl_pade] ...
-        = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
-        d_x,alpha,gamma_u,gamma_v,gamma_w,Eps,...
-        Nx,N,N_Eps,2);
-  end
-  
   % We aren't currently testing pade_safe
   % [ee_pade_safe,ru_pade_safe,rl_pade_safe] ...
   %     = energy_defect(tau2,U_n_tfe,V_n_u_tfe,V_n_ell_tfe,W_n_tfe,...
@@ -185,7 +190,7 @@ for s=1:length(qq)
     end
   else
     if(Taylor == true)
-      RR = ru_taylor./ru_flat;
+      RR = ru_taylor_all./ru_flat;
     else
       RR = ru_pade./ru_flat;  
     end
@@ -194,7 +199,8 @@ for s=1:length(qq)
     contourf(omega,Eps,RR); hold on;
     xlabel('$\omega$ (nm)','interpreter','latex','FontSize',18);
   else
-    RR = repmat(RR, 1, size(RR,1)); % How to fix this?
+    lambda = repmat(lambda', 1, size(RR,2)); % How to fix this?
+    Eps = repmat(Eps',1,size(RR,2));
     contourf(lambda,Eps,RR); hold on;
     xlabel('$\lambda$ (nm)','interpreter','latex','FontSize',18);
   end
