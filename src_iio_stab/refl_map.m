@@ -18,7 +18,7 @@ elseif(RunNumber==3)
   Eps_Max = 0.1; sigma = 0.5;
 elseif(RunNumber==100)
   % IIO Stability paper
-  N = 16; Nx = 24;
+  N = 16; Nx = 32;
   Eps_Max = 0.2; sigma = 0.99;
 end
 Ny = Nx;
@@ -34,7 +34,7 @@ n_u = 1.0;
 n_w = 1.1;   %2.3782, Carbon
 % Mode = 1 (TE) or 2 (TM)
 Mode = 2;
-Taylor = true;
+Taylor = false;
 
 N_Eps = 100;
 %qq = [1,2];
@@ -98,7 +98,7 @@ for s=1:length(qq)
       = setup_2d(Nx,d_x,alpha,gamma_w);
 
   tic;
-  for N = 0:16
+  for N = 16:16
     [U_n,Utilde_n,U,Utilde,V_u_n,Vtilde_u_n,V_u,Vtilde_u,...
        V_ell_n,Vtilde_ell_n,V_ell,Vtilde_ell,W_n,Wtilde_n,W,Wtilde] ...
        = mms_incidence2d(h_bar,eta,fu,fu_x,fell,fell_x,x,...
@@ -145,9 +145,9 @@ for s=1:length(qq)
           Nx,N,N_Eps,2);
     end
 
-    ee_taylor_all(:,:,N+1) = ee_taylor;
-    ru_taylor_all(:,N+1) = ru_taylor;
-    rl_taylor_all(:,N+1) = rl_taylor;
+    ee_pade_all(:,:,N+1) = ee_pade;
+    ru_pade_all(:,N+1) = ru_pade;
+    rl_pade_all(:,N+1) = rl_pade;
   end
   toc;
   % We aren't currently testing pade_safe
@@ -184,15 +184,15 @@ for s=1:length(qq)
   set(gca,'FontSize',12);
   if(PlotRelative==0)
     if(Taylor == true)
-      RR = ru_taylor;
+      RR = ru_taylor_all;
     else
-      RR = ru_pade;
+      RR = ru_pade_all;
     end
   else
     if(Taylor == true)
       RR = ru_taylor_all./ru_flat;
     else
-      RR = ru_pade./ru_flat;  
+      RR = ru_pade_all./ru_flat;  
     end
   end
   if(PlotLambda==0)
