@@ -1,4 +1,20 @@
 function [xx,kk,alphap,betap,eep,eem] = setup_2d(Nx,L,alpha,beta)
+% setup_2d.m: Calculates the proper angle values and discretization for the
+% numerical constants.
+%
+%  Inputs:
+%   Nx: the number of discretization points 
+%   L: the periodicity of the grating surface
+%   alpha: a numerical constant
+%   beta: a numerical constant
+%
+%  Outputs:
+%   xx: numerical discretization based on the number of discretization points in Nx
+%   kk: numerical discretization based on the number of discretization points in Nx
+%   alphap: numerical constant based on discretization scheme
+%   betap: numerical constant based on discretization scheme
+%   eep: numerical constant representing a deviation from in the incidence radiation
+%   eem: numerical constant representing a deviation from in the incidence radiation
 
 xx = (L/Nx)*[0:Nx-1]';
 kk = (2.0*pi/L)*[0:Nx/2-1,-Nx/2:-1]';

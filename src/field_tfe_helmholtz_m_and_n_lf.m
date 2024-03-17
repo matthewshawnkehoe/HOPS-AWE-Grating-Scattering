@@ -1,5 +1,26 @@
 function [wmn] = field_tfe_helmholtz_m_and_n_lf(...
     xi_lf_n_m,f,p,gammapw,alpha,gammaw,Dz,b,Nx,Nz,N,M,identy,alphap)
+% field_tfe_helmholtz_m_and_n_lf.m: Computes the approximate solution (wnm) in the lower field.
+%
+%  Inputs:
+%   xi_lf_n_m: a tensor representing the partial solution in the lower field
+%   f: a test function representing the grating surface
+%   p: an integer where tilde_p = (2*pi/d)*p and d is the periodicity of the grating interface
+%   gammapw: a numerical constant in the lower field for all wave numbers p
+%   alpha: a numerical constant
+%   gammaw: a numerical constant in the lower field 
+%   Dz: the partial derivative with respect to the z component
+%   b: the artificial boundary imposed at the bottom of the lower layer
+%   Nx: the number of discretization points
+%   Nz: the number of collocation points
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%   identy: the identity matrix
+%   alphap: a numerical constant at all wave numbers p
+%
+%  Output:
+%   wmn: a tensor representing the approximate solution in the lower field
+
 
 % MSK 7/30/21: Vectorized (most of) j loop
 

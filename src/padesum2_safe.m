@@ -2,14 +2,12 @@ function [psum] = padesum2_safe(c,Eps,delta,N,M)
 % padesum2 - Uses Pade approximation to sum a truncated Taylor series.
 %
 % Inputs:
+%   c: Taylor series coefficients: [c_{0,0},...,c_{0,N},...,c_{M,0},...,c_{M,N}]
+%   Eps, delta: Value at which to sum
+%   N,M: Degree of truncated Taylor series
 %
-% c - Taylor series coefficients: [c_{0,0},...,c_{0,N},...,c_{M,0},...,c_{M,N}]
-% Eps, delta - Value at which to sum
-% N,M - Degree of truncated Taylor series
-%
-% Outputs:
-%
-% psum - Taylor sum evaluated at Eps, delta
+% Output:
+%   psum: Taylor sum evaluated at Eps, delta
 %
 % DPN 12/20/15
 % MSK 7/21/21 Optimized double for loop

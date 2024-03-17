@@ -1,5 +1,5 @@
 function [tsum] = taylorsum_2_coeff(c,Eps,delta,N,M)
-% taylorsum - Sums a truncated Taylor series.
+% taylorsum_2_coeff.m: - Sums a truncated Taylor series.
 %
 % Inputs:
 %

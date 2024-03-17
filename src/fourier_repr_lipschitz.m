@@ -1,4 +1,17 @@
 function [f,f_x] = fourier_repr_lipschitz(P,x)
+% fourier_repr_lipschitz.m: Plots the Fourier representation of the 
+% Lipschitz boundary profile as in Section 6.4 of "A Stable HOPS/AWE Method
+% for Grating Scattering".
+%
+%  Inputs:
+%   P: An integer representing the maximum summation order of a truncated
+%      Fourier series (to minimize the effect of aliasing errors)
+%   x: numerical discretization based on the number of discretization points in Nx
+%
+%  Outputs:
+%   f: The Fourier representation of a test function at the grating surface
+%   f_x: The Fourier representation of the partial derivative in the x
+%        component for the test function at the grating surface
 
 f = 0;
 for k = 1:ceil(P/2)

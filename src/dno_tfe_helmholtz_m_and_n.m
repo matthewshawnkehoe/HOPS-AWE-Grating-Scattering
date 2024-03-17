@@ -1,4 +1,19 @@
 function [Gnm] = dno_tfe_helmholtz_m_and_n(unm,f,p,Dz,a,Nx,Nz,N,M)
+% dno_tfe_helmholtz_m_and_n.m: Computes the upper layer DNO.
+%
+%  Inputs:
+%   umn: a tensor representing the solution in the upper layer
+%   f: a test function representing the grating surface
+%   p: an integer where tilde_p = (2*pi/d)*p and d is the periodicity of the grating interface
+%   Dz: the partial derivative with respect to the z component
+%   a: the artificial boundary imposed at the top of the upper layer
+%   Nx: the number of discretization points
+%   Nz: the number of collocation points
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%
+%  Output:
+%   Gnm: a tensor representing the upper layer DNO
 
 Gnm = zeros(Nx,M+1,N+1);
 

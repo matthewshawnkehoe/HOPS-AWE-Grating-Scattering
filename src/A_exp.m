@@ -1,4 +1,14 @@
 function [A_nm] = A_exp(alpha_m,f_x,N,M)
+% A_exp.m: Computes A_nm as a reference for the field solvers.
+%
+%  Inputs:
+%   alpha_m: a numerical constant 
+%   f_x: the derivative of a test function in the x component
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%
+%  Output:
+%   A_nm: a numerical function passed into the field solvers.
 
 Nx = length(f_x);
 A_nm = zeros(Nx,N+1,M+1);

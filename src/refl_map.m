@@ -1,4 +1,6 @@
-% refl_map.m
+% refl_map.m: Code to calculate the energy defect (D) or reflectivity map 
+% (R). Plots a portion of the reflicity map or the entire reflectivity map
+% for a given integer q.
 
 clear all; close all;
 
@@ -32,11 +34,11 @@ n_w = 1.1;   %2.3782, Carbon
 Mode = 2;
 Taylor = true;
 
-N_delta = 20;
-N_Eps = 20;
+N_delta = 100;
+N_Eps = 100;
 %qq = [1,2];
-qq = [1];
-%qq = [1:6];
+%qq = [1];
+qq = [1:6];
 
 a = 1.0; b = 1.0;
 % Nz = Nx

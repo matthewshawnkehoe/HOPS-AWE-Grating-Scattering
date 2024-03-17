@@ -18,7 +18,7 @@ elseif(RunNumber==3)
   Eps_Max = 0.1; sigma = 0.5;
 elseif(RunNumber==100)
   % IIO Stability paper
-  N = 16; Nx = 32;
+  N = 16; Nx = 24;
   Eps_Max = 0.2; sigma = 0.99;
 end
 Ny = Nx;
@@ -85,7 +85,8 @@ h_bar = pi/gamma_v + 10^(-16);
 for s=1:length(qq)
   q = qq(s);
   omega = c_0*(2*pi/d_x)*(q + 0.5);
-  lambda = linspace(2*pi*c_0/omega+0.125,(2*pi*c_0./omega)+0.3,N_Eps);
+  % lambda = linspace(2*pi*c_0/omega+0.125,(2*pi*c_0./omega)+0.3,N_Eps)*1000;
+  lambda = linspace(600, 750, N_Eps);
 
   k_u = n_u*omega/c_0;
   gamma_u_bar = sqrt(k_u^2 - alpha^2);
@@ -98,7 +99,7 @@ for s=1:length(qq)
       = setup_2d(Nx,d_x,alpha,gamma_w);
 
   tic;
-  for N = 16:16
+  for N = 0:16
     [U_n,Utilde_n,U,Utilde,V_u_n,Vtilde_u_n,V_u,Vtilde_u,...
        V_ell_n,Vtilde_ell_n,V_ell,Vtilde_ell,W_n,Wtilde_n,W,Wtilde] ...
        = mms_incidence2d(h_bar,eta,fu,fu_x,fell,fell_x,x,...

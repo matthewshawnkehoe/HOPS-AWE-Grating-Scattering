@@ -1,4 +1,14 @@
 function [E_nm_lf] = E_exp_lf(gamma_m,f,N,M)
+% E_exp_lf.m: Computes E_nm_lf as a reference for the lower field solvers.
+%
+%  Inputs:
+%   gamma_m: a numerical constant 
+%   f: a test function representing the grating surface
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%
+%  Output:
+%   E_nm_lf: a numerical function passed into the lower field solvers.
 
 Nx = length(f);
 E_nm_lf = zeros(Nx,M+1,N+1);

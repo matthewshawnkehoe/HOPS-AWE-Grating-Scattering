@@ -1,15 +1,14 @@
 function [tsum] = taylorsum2(c,Eps,delta,N,M)
-% taylorsum2 - Sums a truncated Taylor series.
+% taylorsum2.m: Performs a double summation of a truncated Taylor series by 
+% using the coefficients.
 %
 % Inputs:
-%
-% c - Taylor series coefficients: [c_{0,0},...,c_{0,N},...,c_{M,0},...,c_{M,N}]
-% Eps, delta - Value at which to sum
-% N,M - Degree of truncated Taylor series
+%   c: Taylor series coefficients for [c_{0,0},...,c_{0,N},...,c_{M,0},...,c_{M,N}]
+%   Eps,delta: Value at which to sum
+%   N,M: Degree of truncated Taylor series
 %
 % Outputs:
-%
-% tsum - Taylor sum evaluated at Eps, delta
+%   tsum: Taylor sum evaluated at Eps, delta
 %
 % MSK 7/11/2021
 

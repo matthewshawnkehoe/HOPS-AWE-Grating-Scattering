@@ -1,5 +1,17 @@
 function [gamma_q_m] = gamma_exp(alpha_bar,alpha_bar_q,...
     gamma_bar,gamma_bar_q,k_bar,M)
+% gamma_exp.m: Computes gamma_q_m through a series expansion of gamma_q.
+%
+%  Inputs:
+%   alpha_bar: a numerical constant 
+%   alpha_bar_q: a numerical constant generated for all wave numbers q
+%   gamma_bar: a numerical constant 
+%   gamma_bar_q: a numerical constant generated for all wave numbers q
+%   k_bar: a numerical constant
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%
+%  Output:
+%   gamma_q_m: the series expansion of gamma_q.
 
 gamma_q_m = zeros(1,M+1);
 

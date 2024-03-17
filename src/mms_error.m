@@ -1,4 +1,5 @@
-% mms_error.m
+% mms_error.m: Visualizes the error created by the method of manufactured
+% solutions in the upper and lower fields.
 %
 % MSK 06/18/21 Created for testing when the lower layer has an upwards
 % pointing normal derivative, +\partial_N w

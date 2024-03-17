@@ -1,17 +1,15 @@
 function [psum,a,b] = padesum(c,Eps,M)
-% padesum - Sums a truncated Taylor series via Pade approximation.
+% padesum.m: Sums a truncated Taylor series via Pade approximation.
 %
 % Inputs:
-%
-% c - Taylor series coefficients: [c_0,...,c_N]
-% Eps - Value at which to sum
-% M - Numerator and denominator degree (M = N/2)
+%   c: Taylor series coefficients: [c_0,...,c_N]
+%   Eps: Value at which to sum
+%   M: Numerator and denominator degree (M = N/2)
 %
 % Outputs:
-%
-% psum - Pade approximant evaluated at Eps
-% a - Numerator coefficients: [a_0,...,a_M]
-% b - Denominator coefficients: [1,b_1,...,b_M]
+%   psum: Pade approximant evaluated at Eps
+%   a: Numerator coefficients: [a_0,...,a_M]
+%   b: Denominator coefficients: [1,b_1,...,b_M]
 %
 % Note: Assumes that N = 2*M (otherwise ignores c_N)
 %

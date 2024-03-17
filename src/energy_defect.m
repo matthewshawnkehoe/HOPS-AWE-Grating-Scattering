@@ -1,6 +1,28 @@
 function [ee,ru,rl] = energy_defect(tau2,ubar_n_m,wbar_n_m,...
     d,alpha_bar,gamma_u_bar,gamma_w_bar,Eps,delta,...
     Nx,N,M,N_Eps,N_delta,SumType)
+% energy_defect.m: Computes the energy defect (D) in order to inspect the conservation of energy.
+%
+%  Inputs:
+%   tau2: a numerical constant representing TE or TM mode
+%   ubar_n_m: a tensor representing approximate solution in upper layer
+%   wbar_n_m: tensor representing approximate solution in lower layer
+%   d: the periodicity of the grating
+%   alpha_bar: a numerical constant
+%   gamma_u_bar: a numerical constant in the upper field
+%   gamma_w_bar: a numerical constant in the lower field
+%   Eps: the physical error in the surface deformation
+%   delta: the numerical error in the discretization of the frequency perturbation
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%   N_Eps: the maximum number of epsilon orders for the interfacial perturbation
+%   N_Delta: the maximum number of delta orders for the frequency perturbation
+%   SumType: boolean to control Taylor or Pade summation 
+%
+%  Outputs:
+%   ee: an estimate of the total energy defect (which should approach 1)
+%   ru: proportion of scattered energy in the upper field
+%   rl: proportion of scattered energy in the lower field
 
 ru = zeros(N_Eps,N_delta);
 rl = zeros(N_Eps,N_delta);

@@ -2,6 +2,37 @@ function [U_n_m,W_n_m,ubar_n_m,wbar_n_m] ...
     = two_layer_solve(tau2,zeta_n_m,psi_n_m,...
     gamma_u_bar_p,gamma_w_bar_p,N,Nx,f,f_x,pp,alpha_bar,...
     gamma_u_bar,gamma_w_bar,Dz,a,b,Nz,M,identy,alpha_bar_p)
+% two_layer_solve.m: Solves the two-layer problem in the upper and lower fields.
+%
+%  Inputs:
+%   tau2: a numerical constant representing TE or TM mode
+%   zeta_n_m: a tensor representing the Dirichlet data
+%   psi_n_m: a tensor representing the Neumannn data
+%   gamma_u_bar_p: a numerical parameter calculated at every wave number p in the upper field
+%   gamma_w_bar_p: a numerical parameter calculated at every wave number p in the lower field
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   Nx: the number of discretization points 
+%   f: a test function representing the grating surface
+%   f_x: the derivative of the test function in the x component
+%   pp: an integer where tilde_p = (2*pi/d)*p and d is the periodicity of the grating interface
+%   alpha_bar: a numerical constant
+%   gamma_u_bar: a numerical constant in the upper field 
+%   gamma_w_bar: a numerical constant in the lower field 
+%   Dz: the partial derivative with respect to the z component
+%   a: the artificial boundary imposed at the top of the upper layer
+%   b: the artificial boundary imposed at the bottom of the lower layer
+%   Nz: the number of collocation points
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%   identy: the identity matrix
+%   alpha_bar_p: a numerical constant at all wave numbers p
+%
+%  Outputs:
+%   U_n_m: Approximate solution at the surface z=g(x) in the upper field
+%   W_n_m: Approximate solution at the surface z=g(x) in the lower field
+%   ubar_n_m: Approximate solution from the upper field solver at the top
+%             collocation point
+%   wbar_n_m: Approximate solution from the lower field solver at the lower
+%             collocation point
 
 % MSK 7/26/21: Changed the size of U_n_m,W_n_m,ubar_n_m, and wbar_n_m
 % from (Nx,N+1,M+1) to (Nx,M+1,N+1)

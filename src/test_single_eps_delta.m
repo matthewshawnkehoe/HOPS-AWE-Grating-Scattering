@@ -1,7 +1,8 @@
-% dpn_test_single_eps_delta.m
+% dpn_test_single_eps_delta.m: Test all functionality through a single
+% boundary and frequency perturbation.
 %
-% DPN 6/30/21
-% MSK 7/20/21 Added identity matrix and updated two_layer_solve and field
+% DPN 6/30/21: First commit
+% MSK 7/20/21: Added identity matrix and updated two_layer_solve and field
 % solver.
 % MSK 7/26/21: Changed the size of Unm from (Nx,N+1,M+1) to (Nx,M+1,N+1)
 

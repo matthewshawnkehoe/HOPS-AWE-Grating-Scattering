@@ -1,4 +1,19 @@
 function [u] = vol_fcn_sum(SumType,u_n_m,Eps,delta,Nx,Nz,N,M)
+% vol_fcn_sum.m: Calculates the Taylor or Padé volume function sum.
+%
+%  Inputs:
+%   SumType: boolean to control Taylor or Padé summation
+%   u_n_m: a tensor representing the approximate solution in the upper
+%   field
+%   Eps: the physical error in the surface deformation
+%   delta: the numerical error in the discretization of the frequency perturbation
+%   Nx: the number of discretization points
+%   Nz: the number of collocation points
+%   N: the maximum number of Taylor orders for the interfacial perturbation
+%   M: the maximum number of Taylor orders for the frequency perturbation
+%
+%  Output:
+%   u: the calculated volume function sum
 
 u = zeros(Nx,Nz+1);
 coeff = zeros(N+1,M+1);
