@@ -1,15 +1,15 @@
-function [vnm] = field_tfe_helmholtz_n_and_m_mid(Vun,Velln,hbar,eta,fu,fell,...
+function [vnm] = field_tfe_helmholtz_n_and_m_mid(Qunm,Qellnm,hbar,eta,fu,fell,...
     p,alphap,gammap,eep,eem,Dz,a,Nx,Nz,N,M,identy)
 % field_tfe_helmholtz_m_and_n_mid.m: Computes the approximate solution 
 % (vnm) in the middle field.
 %
 %  Inputs:
-%   Vun: a tensor representing the solution in the upper half of the middle
+%   Qunm: a tensor representing the solution in the upper half of the middle
 %        field
-%   Vell: a tensor representing the solution in the lower half of the middle
+%   Qellnm: a tensor representing the solution in the lower half of the middle
 %        field
 %   hbar: a numerical onstant representing the height above the interface
-%   (?)
+%         (?)
 %   eta: a numerical sontant
 %   fu: a test function representing the grating surface in the upper half
 %       of the middle field
@@ -32,8 +32,8 @@ function [vnm] = field_tfe_helmholtz_n_and_m_mid(Vun,Velln,hbar,eta,fu,fell,...
 %   vnm: a tensor representing the approximate solution in the middle field
 
 vnm = zeros(Nx,Nz+1,M+1,N+1);
-Vunhat = zeros(Nx,M+1,N+1);
-Vellnhat = zeros(Nx,M+1,N+1);
+Qunmhat = zeros(Nx,M+1,N+1);
+Qellnmhat = zeros(Nx,M+1,N+1);
 
 k2 = alphap(0+1)^2 + gammap(0+1)^2;
 
@@ -41,8 +41,8 @@ ell_top = 0 + 1;
 ell_bottom = Nz + 1;
 for n=0:N
   for m=0:M % Needed?
-   Vunhat(:,m+1,n+1) = fft(eem.*Vun(:,m+1,n+1));
-   Vellnhat(:,m+1,n+1) = fft(eem.*Velln(:,m+1,n+1));
+    Qunmhat(:,m+1,n+1) = fft(eem.*Qunm(:,m+1,n+1));
+    Qellnmhat(:,m+1,n+1) = fft(eem.*Qellnm(:,m+1,n+1));
   end
 end
 fu_x = real(ifft( (1i*p).*fft(fu) ));
@@ -61,6 +61,7 @@ fu_full = repmat(fu,1,Nz+1);
 fell_full = repmat(fell,1,Nz+1);
 fu_x_full = repmat(fu_x,1,Nz+1);
 fell_x_full = repmat(fell_x,1,Nz+1);
+Tv = T_dno(alpha,p,gamma,gammap,k2,Nx,M);
 temphat = zeros(Nx,Nz+1);
 
 Z_L = zeros(Nx,Nz+1);
@@ -78,8 +79,8 @@ sh = sinh(1i*gammap*hbar)./(1i*gammap);
 ch = cosh(1i*gammap*hbar);
 aa = -(gammap.^2).*sh - 1i*eta*ch;
 bb = ch - 1i*eta*sh;
-Bp = (Vunhat(:,0+1,0+1) + Vellnhat(:,0+1,0+1))./(2.0*aa);
-Cp = (Vunhat(:,0+1,0+1) - Vellnhat(:,0+1,0+1))./(2.0*bb);
+Bp = (Qunmhat(:,0+1,0+1) + Qellnmhat(:,0+1,0+1))./(2.0*aa);
+Cp = (Qunmhat(:,0+1,0+1) - Qellnmhat(:,0+1,0+1))./(2.0*bb);
 for ell=0:Nz
   vnm(:,ell+1,0+1,0+1) = eep.*ifft( Bp.*cosh(1i*gammap*z(ell+1))...
       + Cp.*sinh(1i*gammap*z(ell+1))./(1i*gammap) );
@@ -87,13 +88,19 @@ end
 
 % n > 0 or m > 0
 
-for n=1:N % 0 to N?
-  for m=1:M  % 0 to M?
-    % Form Fn, Jn
+% Preallocate Fnm and Jnm
+Fnm = zeros(Nx, Nz+1);
+Jnm = zeros(Nx, 1);
+
+for n=0:N
+  for m=0:M
+
+    % Form Fnm, Jnm, Hunm, Hellnm
   
-    Fnm = zeros(Nx,Nz+1);
-    Hun = Vun(:,m+1,n+1);
-    Helln = Velln(:,m+1,n+1);
+    Fnm(:) = 0;
+    Jnm(:) = 0;
+    Hunm = Qunm(:,m+1,n+1);
+    Hellnm = Qellnm(:,m+1,n+1);
   
     A10_xx = (-2.0/(2.0*hbar))*fell_full;
     A10_xz = -Z_U.*fell_x_full;
@@ -173,21 +180,43 @@ for n=1:N % 0 to N?
     
       temp = C1.*vnm(:,:,m+1,n-1+1); % Correct m indexing?
       Fnm = Fnm - temp;
+
+      % Copied from upper field
+      temp = 2*1i*alpha.*S1.*u_x;
+      Fnm = Fnm - temp;
+	  temp = gamma^2.*S1.*vnm(:,:,m+1,n-1+1);
+	  Fnm = Fnm - temp;
     
-      Hun = Hun ...
-          + (1.0/(2*hbar))*fu.*Vun(:,m+1,n-1+1)...  % Correct m indexing?
-          - (1.0/(2*hbar))*fell.*Vun(:,m+1,n-1+1)...
+      Hunm = Hunm ...
+          + (1.0/(2*hbar))*fu.*Qunm(:,m+1,n-1+1)...  % Correct m indexing?
+          - (1.0/(2*hbar))*fell.*Qunm(:,m+1,n-1+1)...
           + (1i*eta/(2*hbar))*fu.*vnm(:,ell_top,m+1,n-1+1)...
           - (1i*eta/(2*hbar))*fell.*vnm(:,ell_top,m+1,n-1+1)...
           + fu_x.*u_x(:,ell_top);
     
-      Helln = Helln ...
-          + (1.0/(2*hbar))*fu.*Velln(:,m+1,n-1+1)... % Correct m indexing?
-          - (1.0/(2*hbar))*fell.*Velln(:,m+1,n-1+1)...
+      Hellnm = Hellnm ...
+          + (1.0/(2*hbar))*fu.*Qellnm(:,m+1,n-1+1)... % Correct m indexing?
+          - (1.0/(2*hbar))*fell.*Qellnm(:,m+1,n-1+1)...
           + (1i*eta/(2*hbar))*fu.*vnm(:,ell_bottom,m+1,n-1+1)...
           - (1i*eta/(2*hbar))*fell.*vnm(:,ell_bottom,m+1,n-1+1)...
           - fell_x.*u_x(:,ell_bottom);
     end
+
+    if(m>=1)
+ 	  u_x = dx(vnm(:,:,m-1+1,n+1),p);
+ 	  temp = 2*1i*alpha.*u_x;
+ 	  Fnm  = Fnm - temp;
+ 	  temp = 2*gamma^2.*vnm(:,:,m-1+1,n+1);
+ 	  Fnm  = Fnm - temp;
+    end
+
+    if(n>=1 && m>=1)
+ 	  u_x = dx(vnm(:,:,m-1+1,n-1+1),p);
+ 	  temp = 2*1i*alpha.*S1.*u_x;
+ 	  Fnm  = Fnm - temp;
+ 	  temp = 2*gamma^2.*S1.*vnm(:,:,m-1+1,n-1+1);
+ 	  Fnm  = Fnm - temp;
+ 	end
   
     if(n>=2)
       u_x = dxp(vnm(:,:,m+1,n-2+1),alphap,eep,eem,Nx,Nz); % Correct m indexing?
@@ -208,46 +237,86 @@ for n=1:N % 0 to N?
     
       temp = C2.*vnm(:,:,m+1,n-2+1); % Correct m indexing?
       Fnm = Fnm - temp;
+      
+      % Copied from upper field
+      temp = 2*1i*alpha.*S2.*u_x;
+      Fnm = Fnm - temp;
+	  temp = gamma^2.*S2.*vnm(:,:,m+1,n-2+1);
+	  Fnm = Fnm - temp;
     
-      Hun = Hun ...
+      Hunm = Hunm ...
           + (1.0/(2*hbar))*fu.*fu_x.*u_x(:,ell_top)...
           - (1.0/(2*hbar))*fell.*fu_x.*u_x(:,ell_top)...
           - fu_x.*fu_x.*u_z(:,ell_top);
 
-      Helln = Helln ...
+      Hellnm = Hellnm ...
           - (1.0/(2*hbar))*fu.*fell_x.*u_x(:,ell_bottom)...
           + (1.0/(2*hbar))*fell.*fell_x.*u_x(:,ell_bottom)...
           + fell_x.*fell_x.*u_z(:,ell_bottom);
     end
+
+    if(m>=2)
+ 	  temp = gamma^2.*vnm(:,:,m-2+1,n+1);
+ 	  Fnm = Fnm - temp;
+    end
+
+    if(n>=1 && m>=2)
+ 	  temp = gamma^2.*S1.*vnm(:,:,m-2+1,n-1+1);
+ 	  Fnm = Fnm - temp;
+    end
+ 	
+    if(n>=2 && m>=1)
+ 	  u_x = dx(vnm(:,:,m-1+1,n-2+1),p);
+ 	  temp = 2*1i*alpha.*S2.*u_x;
+ 	  Fnm = Fnm - temp;
+ 	  temp = 2*gamma^2.*S2.*vnm(:,:,m-1+1,n-2+1);
+ 	  Fnm = Fnm - temp;
+    end
+ 	
+    if(n>=2 && m>=2)
+ 	  temp = gamma^2.*S2.*vnm(:,:,m-2+1,n-2+1);
+ 	  Fnm = Fnm - temp;
+    end
+
+    for r=0:m-1
+      Jnm = Jnm + ifft( (Tv(:,m-r+1)).*fft(vnm(:,ell_top,r+1,n+1)));
+    end
+    if(n>=1)
+      for r=0:m
+        Snm = ifft( (Tv(:,m-r+1)).*fft(vnm(:,ell_top,r+1,n-1+1)) );
+        Jnm = Jnm - (1.0/a)*f.*Snm;
+      end
+    end
   
     % Solve elliptic equation
   
-    Fnmhat = zeros(Nx,Nz+1);
-    for ell=0:Nz
-      Fnmhat(:,ell+1) = fft(eem.*Fnm(:,ell+1));
-    end
-    Hunhat = fft(eem.*Hun);
-    Hellnhat = fft(eem.*Helln);
+    Fnmhat = fft(eem.*Fnm);
+    Jnmhat = fft(eem.*Jnm);
+    Hunmhat = fft(eem.*Hunm);
+    Hellnmhat = fft(eem.*Hellnm);
   
-    for j=1:Nx
-      Fnhat_p = Fnmhat(j,:).';
-      alphaalpha = 1.0;
-      betabeta = 0.0;
-      gammagamma = k2 - (alphap(j))^2;
-      d_a = -1i*eta;
-      n_a = -1.0;
-      r_a = Hellnhat(j);
-      d_b = -1i*eta;
-      n_b = 1.0;
-      r_b = Hunhat(j);
-      uhat_p = solvebvp_colloc(Fnhat_p,alphaalpha,betabeta,gammagamma,...
-          (2.0/(z_max-z_min))*Dz,d_a,n_a,r_a,d_b,n_b,r_b);
-      temphat(j,:) = uhat_p.';
-    end
+    b = Fnmhat.';
+    alphaalpha = 1.0;
+    betabeta = 0.0;
+    gammagamma = k2 - alphap.^2;
+    d_a = -1i*eta;
+    n_a = -1.0;
+    r_a = Hellnmhat(:,m+1,n+1);
+    d_b = -1i*eta;
+    n_b = 1.0;
+    r_b = Hunmhat;
+
+    Vhat = solvebvp_colloc_fast(b,alphaalpha,betabeta,gammagamma,...
+             d_a,n_a,r_a,d_b,n_b,r_b,Nx,identy,D,D2,D_start,D_end);  % (2.0/(z_max-z_min))*Dz after gammagamma?
+
+    if((n>0)||(m>0))
+      temphat = Vhat.';
+    end 
   
     for ell=0:Nz
       vnm(:,ell+1,m+1,n+1) = eep.*ifft(temphat(:,ell+1)); % Correct m indexing?
     end
+    
   end
 end
 
