@@ -48,11 +48,9 @@ f_full = repmat(f,1,Nz+1);
 f_x_full = repmat(f_x,1,Nz+1);
 b_plus_z_full = repmat(b + z.',Nx,1);
 
-What = zeros(Nx,Nz+1);
-
 Tw = T_dno(alpha,p,gammaw,gammapw,k2,Nx,M);
 
-% n=0 and m=0
+% n = 0 and m = 0
 
 for ell=0:Nz
   wmn(:,ell+1,0+1,0+1) = ifft( exp(-1i*gammapw*z(ell+1)).*xi_n_m_hat(:,0+1,0+1) );
@@ -80,6 +78,8 @@ S2 = (1.0/b^2)*f_full.^2;
 % Preallocate Fnm and Qnm
 Fnm = zeros(Nx, Nz+1);
 Qnm = zeros(Nx, 1);
+
+% n > 0 or m > 0
 
 for n=0:N
   for m=0:M

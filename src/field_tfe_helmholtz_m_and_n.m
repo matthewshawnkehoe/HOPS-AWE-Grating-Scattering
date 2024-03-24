@@ -44,12 +44,9 @@ z = ((z_max-z_min)/2.0)*(tilde_z - 1.0) + z_max;
 f_full = repmat(f,1,Nz+1);
 f_x_full = repmat(f_x,1,Nz+1);
 a_minus_z_full = repmat(a - z.',Nx,1);
-
-Uhat = zeros(Nx,Nz+1);
-
 Tu = T_dno(alpha,p,gamma,gammap,k2,Nx,M);
 
-% n=0 and m=0
+% n = 0 and m = 0
 
 for ell=0:Nz
   unm(:,ell+1,0+1,0+1) = ifft( exp(1i*gammap*z(ell+1)).*xi_n_m_hat(:,0+1,0+1) );
@@ -77,6 +74,8 @@ S2 = (1.0/a^2)*f_full.^2;
 % Preallocate Fnm and Jnm
 Fnm = zeros(Nx, Nz+1);
 Jnm = zeros(Nx, 1);
+
+% n > 0 or m > 0
 
 for n=0:N
   for m=0:M
