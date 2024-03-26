@@ -101,6 +101,8 @@ for n=0:N
     Jnm(:) = 0;
     Hunm = Qunm(:,m+1,n+1);
     Hellnm = Qellnm(:,m+1,n+1);
+
+    % TODO - Verify A, B, and C
   
     A10_xx = (-2.0/(2.0*hbar))*fell_full;
     A10_xz = -Z_U.*fell_x_full;
@@ -186,20 +188,14 @@ for n=0:N
       Fnm = Fnm - temp;
 	  temp = gamma^2.*S1.*vnm(:,:,m+1,n-1+1);
 	  Fnm = Fnm - temp;
-    
+
+      % TODO - Fix these
       Hunm = Hunm ...
-          + (1.0/(2*hbar))*fu.*Qunm(:,m+1,n-1+1)...  % Correct m indexing?
-          - (1.0/(2*hbar))*fell.*Qunm(:,m+1,n-1+1)...
-          + (1i*eta/(2*hbar))*fu.*vnm(:,ell_top,m+1,n-1+1)...
-          - (1i*eta/(2*hbar))*fell.*vnm(:,ell_top,m+1,n-1+1)...
-          + fu_x.*u_x(:,ell_top);
+          - (1.0/(hbar))*fu.*Qunm(:,m+1,n-1+1)...
+          - fu_x*v_x(:,ell_top,m+1,n-1+1);
     
       Hellnm = Hellnm ...
-          + (1.0/(2*hbar))*fu.*Qellnm(:,m+1,n-1+1)... % Correct m indexing?
-          - (1.0/(2*hbar))*fell.*Qellnm(:,m+1,n-1+1)...
-          + (1i*eta/(2*hbar))*fu.*vnm(:,ell_bottom,m+1,n-1+1)...
-          - (1i*eta/(2*hbar))*fell.*vnm(:,ell_bottom,m+1,n-1+1)...
-          - fell_x.*u_x(:,ell_bottom);
+          - (1.0/(hbar))*fu.*Qellnm(:,m+1,n-1+1);
     end
 
     if(m>=1)
@@ -208,6 +204,14 @@ for n=0:N
  	  Fnm  = Fnm - temp;
  	  temp = 2*gamma^2.*vnm(:,:,m-1+1,n+1);
  	  Fnm  = Fnm - temp;
+
+      % TODO - Fix these
+      Hunm = Hunm ...
+          + (1.0/(hbar))*fell.*Qunm(:,m-1+1,n+1);
+
+      Hellnm = Hellnm ...
+          + (1.0/(hbar))*fell.*Qellnm(:,m-1+1,n+1) ... 
+          + fell_x.*v_x(:,ell_bottom,m-1++1,n+1);
     end
 
     if(n>=1 && m>=1)
@@ -216,6 +220,12 @@ for n=0:N
  	  Fnm  = Fnm - temp;
  	  temp = 2*gamma^2.*S1.*vnm(:,:,m-1+1,n-1+1);
  	  Fnm  = Fnm - temp;
+
+      % TODO - Fix these
+      Hunm = Hunm ...
+          + (1.0/(hbar))*fell.*fu_x.*v_x(:,ell_top,m-1+1,n-1+1);
+      Hellnm = Hellnm ...
+          + (1.0/(hbar))*fu.*fell_x.*v_x(:,ell_bottom,m-1+1,n-1+1);
  	end
   
     if(n>=2)
@@ -244,20 +254,19 @@ for n=0:N
 	  temp = gamma^2.*S2.*vnm(:,:,m+1,n-2+1);
 	  Fnm = Fnm - temp;
     
+      % TODO - Fix these
       Hunm = Hunm ...
-          + (1.0/(2*hbar))*fu.*fu_x.*u_x(:,ell_top)...
-          - (1.0/(2*hbar))*fell.*fu_x.*u_x(:,ell_top)...
-          - fu_x.*fu_x.*u_z(:,ell_top);
-
-      Hellnm = Hellnm ...
-          - (1.0/(2*hbar))*fu.*fell_x.*u_x(:,ell_bottom)...
-          + (1.0/(2*hbar))*fell.*fell_x.*u_x(:,ell_bottom)...
-          + fell_x.*fell_x.*u_z(:,ell_bottom);
+          - (1.0/(hbar))*fu.*fu_x.*v_x(:,ell_top,m+1,n-2+1)...
+          + fu_x.*fu_x.*v_z(:,ell_top,m+1,n-2+1);
     end
 
     if(m>=2)
  	  temp = gamma^2.*vnm(:,:,m-2+1,n+1);
  	  Fnm = Fnm - temp;
+
+      Hellnm = Hellnm ...
+          - (1.0/(hbar))*fell.*fell_x.*v_x(:,ell_bottom,m-2+1,n+1)...
+          + fell_x.*fell_x.*v_z(:,ell_bottom,m-2+1,n+1);
     end
 
     if(n>=1 && m>=2)
@@ -316,7 +325,7 @@ for n=0:N
     for ell=0:Nz
       vnm(:,ell+1,m+1,n+1) = eep.*ifft(temphat(:,ell+1)); % Correct m indexing?
     end
-    
+
   end
 end
 
