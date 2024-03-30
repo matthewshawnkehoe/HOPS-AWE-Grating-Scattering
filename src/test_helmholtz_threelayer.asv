@@ -61,8 +61,8 @@ fprintf('test_helmholtz_threelayer\n');
 for delta_idx = 1:N_delta
     for eps_idx = 1:length(Eps_values)
         Eps = Eps_values(eps_idx);
-        Delta_values  = linspace(-sigma,sigma,N_delta);
-        Delta = Delta_values(delta_idx);
+        Delta = linspace(-sigma,sigma,N_delta);
+        Delta = 
 
         fprintf('-------------------------\n');
         if(Mode==1)
@@ -79,7 +79,7 @@ for delta_idx = 1:N_delta
         [U_nm,Utilde_nm,U,Utilde,V_u_nm,Vtilde_u_nm,V_u,Vtilde_u,...
             V_ell_nm,Vtilde_ell_nm,V_ell,Vtilde_ell,W_nm,Wtilde_nm,W,Wtilde] ...
             = mms_incidence2d(hbar,eta,fu,fu_x,fell,fell_x,x,...
-            alphap,gamma_up,gamma_vp,gamma_wp,Nx,N,M,Eps,Delta);
+            alphap,gamma_up,gamma_vp,gamma_wp,Nx,N,Eps);
     
         if(Mode==1)
           zeta_nm = (U_nm - Utilde_nm - V_u_nm + Vtilde_u_nm)/(-2*1i*eta);
