@@ -1,4 +1,4 @@
-function [U_n,Vu_n,Vell_n,W_n] ...
+function [U_nm,Vu_nm,Vell_nm,W_nm] ...
   = threelayer_tfe_helmholtz(zeta_n,psi_n,theta_n,mu_n,...
   hbar,eta,fu,fell,tau2,sigma2,p,alphap,gamma_up,gamma_vp,gamma_wp,...
   eep,eem,a,b,Nx,Nz,N)
@@ -9,10 +9,10 @@ function [U_n,Vu_n,Vell_n,W_n] ...
 
 % hbar is the "half-height" of the layer
 
-U_n = zeros(Nx,N+1);
-Vu_n = zeros(Nx,N+1);
-Vell_n = zeros(Nx,N+1);
-W_n = zeros(Nx,N+1);
+U_nm = zeros(Nx,N+1);
+Vu_nm = zeros(Nx,N+1);
+Vell_nm = zeros(Nx,N+1);
+W_nm = zeros(Nx,N+1);
 Q_U_rs = zeros(Nx,N+1,N+1);
 Ru_V_rs = zeros(Nx,N+1,N+1);
 Rell_V_rs = zeros(Nx,N+1,N+1);
@@ -68,48 +68,48 @@ for n=0:N
     What(j) = xx(4);
   end
 
-  U_n(:,n+1) = eep.*ifft(Uhat);
-  Vu_n(:,n+1) = eep.*ifft(Vuhat);
-  Vell_n(:,n+1) = eep.*ifft(Vellhat);
-  W_n(:,n+1) = eep.*ifft(What);
+  U_nm(:,n+1) = eep.*ifft(Uhat);
+  Vu_nm(:,n+1) = eep.*ifft(Vuhat);
+  Vell_nm(:,n+1) = eep.*ifft(Vellhat);
+  W_nm(:,n+1) = eep.*ifft(What);
 
   % Compute and store Q_r[U_s]
   s = n;
   xi = zeros(Nx,N-s+1);
-  xi(:,0+1) = U_n(:,s+1);
-  un = field_tfe_helmholtz_upper(xi,eta,fu,...
+  xi(:,0+1) = U_nm(:,s+1);
+  unm = field_tfe_helmholtz_m_and_n(xi,eta,fu,...
       p,alphap,gamma_up,eep,eem,Dz,a,Nx,Nz,N-s);
-  Qn = iio_tfe_helmholtz_upper(un,eta,fu,...
+  Qnm = iio_tfe_helmholtz_upper(unm,eta,fu,...
       p,alphap,gamma_up,eep,eem,Dz,a,Nx,Nz,N-s);
   for r=0:N-s
-    Q_U_rs(:,r+1,s+1) = Qn(:,r+1);
+    Q_U_rs(:,r+1,s+1) = Qnm(:,r+1);
   end
 
   % Compute and store Ru_r[V_s], Rell_r[V_s]
   s = n;
   xi = zeros(Nx,N-s+1);
   zeta = zeros(Nx,N-s+1);
-  xi(:,0+1) = Vu_n(:,s+1);
-  zeta(:,0+1) = Vell_n(:,s+1);
-  vn = field_tfe_helmholtz_middle(xi,zeta,hbar,eta,fu,fell,...
+  xi(:,0+1) = Vu_nm(:,s+1);
+  zeta(:,0+1) = Vell_nm(:,s+1);
+  vnm = field_tfe_helmholtz_m_and_n_mid(xi,zeta,hbar,eta,fu,fell,...
       p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s);
-  [Run,Relln] = iio_tfe_helmholtz_middle(vn,hbar,eta,fu,fell,...
+  [Runm,Rellnm] = iio_tfe_helmholtz_middle(vnm,hbar,eta,fu,fell,...
       p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s);
   for r=0:N-s
-    Ru_V_rs(:,r+1,s+1) = Run(:,r+1);
-    Rell_V_rs(:,r+1,s+1) = Relln(:,r+1);
+    Ru_V_rs(:,r+1,s+1) = Runm(:,r+1);
+    Rell_V_rs(:,r+1,s+1) = Rellnm(:,r+1);
   end
 
   % Compute and store S_r[W_s]
   s = n;
   xi = zeros(Nx,N-s+1);
-  xi(:,0+1) = W_n(:,s+1);
-  wn = field_tfe_helmholtz_lower(xi,eta,fell,...
+  xi(:,0+1) = W_nm(:,s+1);
+  wnm = field_tfe_helmholtz_m_and_n_lf(xi,eta,fell,...
       p,alphap,gamma_wp,eep,eem,Dz,b,Nx,Nz,N-s);
-  Sn = iio_tfe_helmholtz_lower(wn,eta,fell,...
+  Snm = iio_tfe_helmholtz_lower(wnm,eta,fell,...
       p,alphap,gamma_wp,eep,eem,Dz,b,Nx,Nz,N-s);
   for r=0:N-s
-    S_W_rs(:,r+1,s+1) = Sn(:,r+1);
+    S_W_rs(:,r+1,s+1) = Snm(:,r+1);
   end
   
 end
