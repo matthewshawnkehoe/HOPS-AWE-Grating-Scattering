@@ -1,5 +1,8 @@
 function [unm] = field_tfe_helmholtz_m_and_n(...
     xi_n_m,f,p,gammap,alpha,gamma,Dz,a,Nx,Nz,N,M,identy,alphap)
+
+unm = field_tfe_helmholtz_m_and_n(xi,eta,fu,...
+      p,alphap,gamma_up,eep,eem,Dz,a,Nx,Nz,N-s);
 % field_tfe_helmholtz_m_and_n.m: Computes the approximate solution (unm) in the upper field.
 %
 %  Inputs:

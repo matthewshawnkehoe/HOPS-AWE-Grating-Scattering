@@ -83,12 +83,7 @@ for n=0:N
     u_n_m = field_tfe_helmholtz_m_and_n(xi_n_m,f,pp,gamma_u_bar_p,...
               alpha_bar,gamma_u_bar,Dz,a,Nx,Nz,N-q,M-s,identy,alpha_bar_p);
     Q_n_m = iio_tfe_helmholtz_upper(u_n_m,...
-              f,pp,Dz,a,Nx,Nz,N-q,M-s);
-    for p=0:N-q
-      for r=0:M-s
-        Q_U_pqrs(:,r+1,s+1,p+1,q+1) = Q_n_m(:,r+1,p+1);
-      end
-    end
+    f,pp,Dz,a,Nx,Nz,N-q,M-s);
     % s = n;
     % xi = zeros(Nx,N-s+1);
     % xi(:,0+1) = U_n_m(:,s+1);
@@ -137,16 +132,6 @@ for n=0:N
     q = n; s = m;
     xi_n_m = zeros(Nx,M-s+1,N-q+1);
     xi_n_m(:,0+1,0+1) = W_n_m(:,s+1,q+1);
-    %eta_n_m = ...
-    wnm = field_tfe_helmholtz_m_and_n_lf(xi_n_m,eta,fell,...
-            p,alphap,gamma_wp,eep,eem,Dz,b,Nx,Nz,N-s);
-    Snm = iio_tfe_helmholtz_lower(wnm,eta,fell,...
-            p,alphap,gamma_wp,eep,eem,Dz,b,Nx,Nz,N-s);
-    for p=0:N-q
-      for r=0:M-s
-        S_W_pqrs(:,r+1,s+1,p+1,q+1) = Snm(:,r+1,p+1);
-      end
-    end
 
     % s = n;
     % xi = zeros(Nx,N-s+1);
