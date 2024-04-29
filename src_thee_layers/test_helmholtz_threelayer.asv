@@ -55,9 +55,6 @@ fell_x = real(ifft( (1i*p).*fft(fell) ));
 % Sigma
 sigma = sqrt(sigma2);
 
-% Identity
-identy = eye(Nz+1);
-
 fprintf('test_helmholtz_threelayer\n');
 
 % Loop through all values of Eps and Delta and store data
@@ -98,8 +95,8 @@ for delta_idx = 1:N_delta
     
         [U_nm_tfe,V_nm_u_tfe,V_nm_ell_tfe,W_nm_tfe] ...
             = threelayer_tfe_helmholtz(zeta_nm,psi_nm,theta_nm,mu_nm,...
-            hbar,eta,fu,fell,tau2,sigma2,p,alpha,gamma_u,gamma_v,gamma_w,...
-            alphap,gamma_up,gamma_vp,gamma_wp,eep,eem,a,b,Nx,Nz,N,M,identy);
+            hbar,eta,fu,fell,tau2,sigma2,p,alphap,gamma_u,gamma_u,gamma_u,...
+            gamma_up,gamma_vp,gamma_wp,eep,eem,a,b,Nx,Nz,N,M);
      
         [relerr_U,nplot_U] = compute_errors(U,U_nm_tfe,Eps,N,Nx);
     
