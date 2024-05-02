@@ -9,14 +9,14 @@ function [U_n_m,Vu_n_m,Vell_n_m,W_n_m] ...
 
 % hbar is the "half-height" of the layer
 
-U_n_m = zeros(Nx,N+1,M+1);
-Vu_n_m = zeros(Nx,N+1,M+1);
-Vell_n_m = zeros(Nx,N+1,M+1);
-W_n_m = zeros(Nx,N+1,M+1);
-Q_U_rs = zeros(Nx,N+1,M+1);
-Ru_V_rs = zeros(Nx,N+1,M+1);
-Rell_V_rs = zeros(Nx,N+1,M+1);
-S_W_rs = zeros(Nx,N+1,M+1);
+U_n_m = zeros(Nx,M+1,N+1);
+Vu_n_m = zeros(Nx,M+1,N+1);
+Vell_n_m = zeros(Nx,M+1,N+1);
+W_n_m = zeros(Nx,M+1,N+1);
+Q_U_rs = zeros(Nx,M+1,N+1);
+Ru_V_rs = zeros(Nx,M+1,N+1);
+Rell_V_rs = zeros(Nx,M+1,N+1);
+S_W_rs = zeros(Nx,M+1,N+1);
 
 Q0 = (-1i*gamma_up+1i*eta)./(-1i*gamma_up-1i*eta);
 S0 = (-1i*gamma_wp+1i*eta)./(-1i*gamma_wp-1i*eta);
@@ -31,23 +31,23 @@ Rellell0 = Ruu0;
 
 for n=0:N
   for m=0:M
-    zetahat = fft(eem.*zeta_n(:,n+1,m+1));
-    psihat = fft(eem.*psi_n(:,n+1,m+1));
-    thetahat = fft(eem.*theta_n(:,n+1,m+1));
-    muhat = fft(eem.*mu_n(:,n+1,m+1));
+    zetahat = fft(eem.*zeta_n(:,m+1,n+1));
+    psihat = fft(eem.*psi_n(:,m+1,n+1));
+    thetahat = fft(eem.*theta_n(:,m+1,n+1));
+    muhat = fft(eem.*mu_n(:,m+1,n+1));
     Y_Uhat = -2*1i*eta*zetahat;
     Y_Vuhat = -2*psihat;
     Y_Vellhat = -2*1i*eta*thetahat;
     Y_What = -2*muhat;
 
     for k=0:n-1
-      YY = -Q_U_rs(:,n-k+1,k+1) + Ru_V_rs(:,n-k+1,k+1);
+      YY = -Q_U_rs(:,k+1,n-k+1) + Ru_V_rs(:,k+1,n-k+1);
       Y_Uhat = Y_Uhat - fft(eem.*YY);
-      YY = Q_U_rs(:,n-k+1,k+1) + tau2*Ru_V_rs(:,n-k+1,k+1);
+      YY = Q_U_rs(:,k+1,n-k+1) + tau2*Ru_V_rs(:,k+1,n-k+1);
       Y_Vuhat = Y_Vuhat - fft(eem.*YY);
-      YY = -Rell_V_rs(:,n-k+1,k+1) + S_W_rs(:,n-k+1,k+1);
+      YY = -Rell_V_rs(:,k+1,n-k+1) + S_W_rs(:,k+1,n-k+1);
       Y_Vellhat = Y_Vellhat - fft(eem.*YY);
-      YY = Rell_V_rs(:,n-k+1,k+1) + sigma2*S_W_rs(:,n-k+1,k+1);
+      YY = Rell_V_rs(:,k+1,n-k+1) + sigma2*S_W_rs(:,k+1,n-k+1);
       Y_What = Y_What - fft(eem.*YY);
     end
 
@@ -82,8 +82,8 @@ for n=0:N
     %eta_n_m = ...
     u_n_m = field_tfe_helmholtz_m_and_n(xi_n_m,fu,p,gamma_up,...
               alpha,gamma_u,Dz,a,Nx,Nz,N-q,M-s,identy,alphap);
-    Q_n_m = iio_tfe_helmholtz_upper(u_n_m,...
-              f,p,Dz,a,Nx,Nz,N-q,M-s);
+    Q_n_m = iio_tfe_helmholtz_upper(u_n_m,eta,fu,p,alphap,gamma_up,...
+              eep,eem,Dz,a,Nx,Nz,N-q,M-s);
     for p=0:N-q
       for r=0:M-s
         Q_U_pqrs(:,r+1,s+1,p+1,q+1) = Q_n_m(:,r+1,p+1);
@@ -107,8 +107,8 @@ for n=0:N
     zeta_n_m = zeros(Nx,M-s+1,N-q+1);
     xi_n_m(:,0+1) = Vu_n_m(:,s+1,q+1);
     zeta_n_m(:,0+1) = Vell_n_m(:,s+1,q+1);
-    v_n_m = field_tfe_helmholtz_m_and_n_mid(xi,zeta,hbar,eta,fu,fell,...
-                        p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s);
+    v_n_m = field_tfe_helmholtz_n_and_m_mid(xi_n_m,zeta_n_m,hbar,eta,fu,fell,...
+                        p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s,M-s,identy);
     [Runm,Rellnm] = iio_tfe_helmholtz_middle(vnm,hbar,eta,fu,fell,...
                         p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s);
     for p=0:N-q
