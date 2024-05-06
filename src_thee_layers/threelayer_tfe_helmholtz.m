@@ -108,7 +108,7 @@ for n=0:N
     xi_n_m(:,0+1) = Vu_n_m(:,s+1,q+1);
     zeta_n_m(:,0+1) = Vell_n_m(:,s+1,q+1);
     v_n_m = field_tfe_helmholtz_n_and_m_mid(xi_n_m,zeta_n_m,hbar,eta,fu,fell,...
-                        p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s,M-s,identy);
+                        p,alpha,alphap,gamma_v,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s,M-s,identy);
     [Runm,Rellnm] = iio_tfe_helmholtz_middle(vnm,hbar,eta,fu,fell,...
                         p,alphap,gamma_vp,eep,eem,Dz,a,Nx,Nz,N-s);
     for p=0:N-q

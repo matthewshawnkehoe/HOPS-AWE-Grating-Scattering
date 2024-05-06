@@ -32,7 +32,7 @@ b(end,:) = r_min;
       
 A(1,:,:) = repmat(n_max*D_start,[1,1,Nx]);
 A(end,end,:) = A(end,end,:) + d_min;
-A(1,1,:) = A(1,1,:) + reshape(d_max,1,1,Nx);
+A(1,1,:) = A(1,1,:) + reshape(d_max,1,1,[]);
 b(1,:) = r_max;
 
 utilde = pagemldivide(A,reshape(b,[],1,Nx));

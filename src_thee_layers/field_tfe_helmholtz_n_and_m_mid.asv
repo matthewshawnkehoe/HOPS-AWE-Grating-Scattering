@@ -100,10 +100,10 @@ for n=0:N
     % Form Fnm, Jnm, Hunm, Hellnm
     Fnm(:) = 0;
     Jnm(:) = 0;
-    % TODO - Correct initialization of Hunm, Hunm?
-    Hunm(:) = 0;
-    Hellnm(:) = 0;
-    
+    % TODO - Add m to Hunm and Hellnm
+    Hunm = Qunm(:,m+1,n+1);
+    Hellnm = Qellnm(:,m+1,n+1);
+
     % TODO - Verify A, B, and C
   
     A10_xx = (-2.0/(2.0*hbar))*fell_full;
