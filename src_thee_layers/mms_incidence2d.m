@@ -8,8 +8,8 @@ function [U_nm,Utilde_nm,U,Utilde,V_u_nm,Vtilde_u_nm,V_u,Vtilde_u,...
 f = fu; f_x = fu_x;
 
 A_u_r = -3.0; r = 2; alphap_r = alphap(r+1); gamma_up_r = gamma_up(r+1);
-xi_u_nm = zeros(Nx,N+1);
-nu_u_nm = zeros(Nx,N+1);
+xi_u_nm = zeros(Nx,M+1,N+1);
+nu_u_nm = zeros(Nx,M+1,N+1);
 f_nm1 = ones(Nx,1);
 f_nm = ones(Nx,1);
 xi_u_nm(:,0+1) = A_u_r*exp(1i*alphap_r*x);
@@ -36,8 +36,8 @@ Utilde = nu_u + 1i*eta*xi_u;
 f = fell; f_x = fell_x;
 
 A_w_r = 4.0; r = 3; alphap_r = alphap(r+1); gamma_wp_r = gamma_wp(r+1);
-xi_w_nm = zeros(Nx,N+1);
-nu_w_nm = zeros(Nx,N+1);
+xi_w_nm = zeros(Nx,M+1,N+1);
+nu_w_nm = zeros(Nx,M+1,N+1);
 f_nm1 = ones(Nx,1);
 f_nm = ones(Nx,1);
 xi_w_nm(:,0+1) = A_w_r*exp(1i*alphap_r*x);
@@ -63,10 +63,10 @@ Wtilde = nu_w + 1i*eta*xi_w;
 
 B_v_r = -exp(1); C_v_r = pi;
 r = 3; alphap_r = alphap(r+1); gamma_vp_r = gamma_vp(r+1);
-xi_v_nm = zeros(Nx,N+1);
-zeta_v_nm = zeros(Nx,N+1);
-nu_v_nm = zeros(Nx,N+1);
-psi_v_nm = zeros(Nx,N+1);
+xi_v_nm = zeros(Nx,M+1,N+1);
+zeta_v_nm = zeros(Nx,M+1,N+1);
+nu_v_nm = zeros(Nx,M+1,N+1);
+psi_v_nm = zeros(Nx,M+1,N+1);
 fu_nm1 = ones(Nx,1);
 fell_nm1 = ones(Nx,1);
 fu_nm = ones(Nx,1);

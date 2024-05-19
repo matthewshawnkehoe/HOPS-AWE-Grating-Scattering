@@ -91,7 +91,7 @@ end
 % Preallocate Fnm, Jnm, Hunm, and Hellnm
 Fnm = zeros(Nx, Nz+1);
 Jnm = zeros(Nx, 1);
-Hunm =  zeros(Nx,M+1,N+1);
+%Hunm =  zeros(Nx,M+1,N+1);
 Hellnm =  zeros(Nx,M+1,N+1);
 
 for n=0:N
@@ -193,7 +193,7 @@ for n=0:N
 
       % TODO - Fix these
       Hunm = Hunm ...
-          - (1.0/(hbar))*fu.*Qunm(:,m+1,n-1+1)...
+          - (1.0/(hbar))*fu.*Qunm(:,m+1,n-1+1);
           % - fu_x*u_x(:,ell_top,m+1,n-1+1);
     
       Hellnm = Hellnm ...
@@ -239,7 +239,7 @@ for n=0:N
       temp = B2_x.*u_x;
       Fnm = Fnm - temp;
     
-      u_z = dz(vnm(:,:,m+1,n-2+1),Dz,2*hbarz); % Correct m indexing?
+      u_z = dz(vnm(:,:,m+1,n-2+1),Dz,2*hbar); % Correct m indexing?
       temp = A2_xz.*u_z;
       Fnm = Fnm - dxp(temp,alphap,eep,eem,Nx,Nz);
       temp = A2_zz.*u_z;
@@ -251,9 +251,9 @@ for n=0:N
       Fnm = Fnm - temp;
       
       % Copied from upper field
-      temp = 2*1i*alpha.*S2.*u_x;
+      temp = 2*1i*alpha.*C2.*u_x;
       Fnm = Fnm - temp;
-	  temp = gamma^2.*S2.*vnm(:,:,m+1,n-2+1);
+	  temp = gamma^2.*C2.*vnm(:,:,m+1,n-2+1);
 	  Fnm = Fnm - temp;
     
       % TODO - Fix these
@@ -275,7 +275,7 @@ for n=0:N
     end
 
     if(n>=1 && m>=2)
- 	  temp = gamma^2.*S1.*vnm(:,:,m-2+1,n-1+1);
+ 	  temp = gamma^2.*C1.*vnm(:,:,m-2+1,n-1+1);
  	  Fnm = Fnm - temp;
     end
  	
