@@ -5,7 +5,7 @@ nature. This repository contains a High–Order Perturbation of Surfaces/Asympto
 posed on piecewise homogeneous domains. The algorithm was built and designed by Matthew Kehoe (mskehoe001@gmail.com) and David Nicholls at the University of Illinois at Chicago.
 
 ## Installation
-Download the Matlab code in the src directory. The three main files are
+Download the Matlab code in the `src` directory. The three main files are
 
 1. `refl_map.m`: Calculates the Reflectivity Map, R, which measures the response (reflected energy) of a periodically corrugated grating structure as a
 function of illumination frequency, ω, and corrugation amplitude, h.
@@ -23,6 +23,11 @@ Example 2: The Reflectivity Map for vacuum over silver and gold.
 ![alt text](https://axion004.files.wordpress.com/2022/10/refl_map_vacuum_metals.png)
 
 More examples (with instructions on how to run the code) can be found in the plots directory.
+
+## Future Development
+
+1. Alongside the Matlab implementation, a Julia implementation is currently under development. The ongoing work resides in the `src_julia` directory, where the file `refl_map.jl` offers functionality comparable to its Matlab counterpart.
+2. At present, the implementation accommodates two layers. Work is underway to extend support to three or more layers, with ongoing development taking place in the `src_three_layers` directory.
 
 ## References
  
