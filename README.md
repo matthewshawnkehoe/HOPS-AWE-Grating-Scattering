@@ -33,7 +33,7 @@ More examples (with instructions on how to run the code) can be found in the plo
  
 [1]  M. Kehoe and D. P. Nicholls, [*Joint Geometry/Frequency Analyticity of Fields Scattered by Periodic Layered Media*](https://epubs.siam.org/doi/10.1137/22M1477568), SIAM Journal on Mathematical Analysis, Volume 55, Issue 3, 1737-1765 (2023). https://doi.org/10.1137/22M1477568
 
-[2] M. Kehoe and D. P. Nicholls, [*A stable high-order perturbation of surfaces/asymptotic waveform evaluation method for the numerical solution of grating scattering problems*](https://link.springer.com/article/10.1007/s10915-024-02566-6). Journal of Scientific Computing., 100(1) (2024). https://doi.org/10.1007/s10915-024-02566-6
+[2] M. Kehoe and D. P. Nicholls, [*A stable high-order perturbation of surfaces/asymptotic waveform evaluation method for the numerical solution of grating scattering problems*](https://link.springer.com/article/10.1007/s10915-024-02566-6), Journal of Scientific Computing, 100(1) (2024). https://doi.org/10.1007/s10915-024-02566-6
 
 [3] M. Kehoe, [*Joint Analyticity of the Transformed Field and Dirichlet–Neumann Operator in Periodic Media*](https://matthewshawnkehoe.github.io/files/kehoe_thesis.pdf), PhD Thesis, University of Illinois at Chicago (2022).
 
@@ -42,4 +42,4 @@ More examples (with instructions on how to run the code) can be found in the plo
 
 All code within this repository is freely available for use under the terms of the MIT license. However, if you intend to utilize or are currently using the code, especially for academic or research purposes, we kindly request that you send an email to Matthew Kehoe (mskehoe001@gmail.com) with your name, institution, and a brief description of your interest in this work. If you use the HOPS/AWE algorithm in any work resulting in a scientific or academic publication, we would greatly appreciate it if you could cite the HOPS/AWE algorithm in your manuscript as follows:"
 
-M. Kehoe and D. P. Nicholls, [*A stable high-order perturbation of surfaces/asymptotic waveform evaluation method for the numerical solution of grating scattering problems*](https://link.springer.com/article/10.1007/s10915-024-02566-6). Journal of Scientific Computing., 100(1) (2024). https://doi.org/10.1007/s10915-024-02566-6
+M. Kehoe and D. P. Nicholls, [*A stable high-order perturbation of surfaces/asymptotic waveform evaluation method for the numerical solution of grating scattering problems*](https://link.springer.com/article/10.1007/s10915-024-02566-6), Journal of Scientific Computing, 100(1) (2024). https://doi.org/10.1007/s10915-024-02566-6
