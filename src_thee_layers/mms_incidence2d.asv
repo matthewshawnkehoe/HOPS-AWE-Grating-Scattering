@@ -12,16 +12,16 @@ xi_u_nm = zeros(Nx,M+1,N+1);
 nu_u_nm = zeros(Nx,M+1,N+1);
 f_nm1 = ones(Nx,1);
 f_nm = ones(Nx,1);
-xi_u_nm(:,0+1,0+1) = A_u_r*exp(1i*alphap_r*x);
-nu_u_nm(:,0+1,0+1) = (-1i*gamma_up_r)*A_u_r*exp(1i*alphap_r*x);
+xi_u_nm(:,0+1) = A_u_r*exp(1i*alphap_r*x);
+nu_u_nm(:,0+1) = (-1i*gamma_up_r)*A_u_r*exp(1i*alphap_r*x);
 for n=1:N
   for m=1:M
     if(n>1)
       f_nm1 = f.*f_nm1/(n-1);
     end
     f_nm = f.*f_nm/n;
-    xi_u_nm(:,m+1,n+1) = A_u_r*exp(1i*alphap_r*x).*(f_nm*(1i*gamma_up_r)^n);
-    nu_u_nm(:,m+1,n+1) = (-1i*gamma_up_r)*A_u_r*exp(1i*alphap_r*x).*(f_nm*(1i*gamma_up_r)^n)...
+    xi_u_nm(:,:,n+1) = A_u_r*exp(1i*alphap_r*x).*(f_nm*(1i*gamma_up_r)^n);
+    nu_u_nm(:,:,n+1) = (-1i*gamma_up_r)*A_u_r*exp(1i*alphap_r*x).*(f_nm*(1i*gamma_up_r)^n)...
       + (1i*alphap_r)*A_u_r*f_x.*exp(1i*alphap_r*x).*(f_nm1*(1i*gamma_up_r)^(n-1));
   end
 end
@@ -42,18 +42,16 @@ xi_w_nm = zeros(Nx,M+1,N+1);
 nu_w_nm = zeros(Nx,M+1,N+1);
 f_nm1 = ones(Nx,1);
 f_nm = ones(Nx,1);
-xi_w_nm(:,0+1,0+1) = A_w_r*exp(1i*alphap_r*x);
-nu_w_nm(:,0+1,0+1) = (-1i*gamma_wp_r)*A_w_r*exp(1i*alphap_r*x);
+xi_w_nm(:,:,0+1) = A_w_r*exp(1i*alphap_r*x);
+nu_w_nm(:,:,0+1) = (-1i*gamma_wp_r)*A_w_r*exp(1i*alphap_r*x);
 for n=1:N
-  for m=1:M
-    if(n>1)
-      f_nm1 = f.*f_nm1/(n-1);
-    end
-    f_nm = f.*f_nm/n;
-    xi_w_nm(:,m+1,n+1) = A_w_r*exp(1i*alphap_r*x).*(f_nm*(-1i*gamma_wp_r)^n);
-    nu_w_nm(:,m+1,n+1) = (-1i*gamma_wp_r)*A_w_r*exp(1i*alphap_r*x).*(f_nm*(-1i*gamma_wp_r)^n)...
-      - (1i*alphap_r)*A_w_r*f_x.*exp(1i*alphap_r*x).*(f_nm1*(-1i*gamma_wp_r)^(n-1));
+  if(n>1)
+    f_nm1 = f.*f_nm1/(n-1);
   end
+  f_nm = f.*f_nm/n;
+  xi_w_nm(:,:,n+1) = A_w_r*exp(1i*alphap_r*x).*(f_nm*(-1i*gamma_wp_r)^n);
+  nu_w_nm(:,:,n+1) = (-1i*gamma_wp_r)*A_w_r*exp(1i*alphap_r*x).*(f_nm*(-1i*gamma_wp_r)^n)...
+      - (1i*alphap_r)*A_w_r*f_x.*exp(1i*alphap_r*x).*(f_nm1*(-1i*gamma_wp_r)^(n-1));
 end
 W_nm = nu_w_nm - 1i*eta*xi_w_nm;
 Wtilde_nm = nu_w_nm + 1i*eta*xi_w_nm;
@@ -77,39 +75,37 @@ fu_nm = ones(Nx,1);
 fell_nm = ones(Nx,1);
 eigh = exp(1i*gamma_vp_r*hbar);
 eigmh = exp(1i*gamma_vp_r*(-hbar));
-xi_v_nm(:,0+1,0+1) = (B_v_r*eigh+C_v_r*eigmh)*exp(1i*alphap_r*x);
-zeta_v_nm(:,0+1,0+1) = (B_v_r*eigmh+C_v_r*eigh)*exp(1i*alphap_r*x);
-nu_v_nm(:,0+1,0+1) = (1i*gamma_vp_r*B_v_r*eigh-1i*gamma_vp_r*C_v_r*eigmh)...
+xi_v_nm(:,:,0+1) = (B_v_r*eigh+C_v_r*eigmh)*exp(1i*alphap_r*x);
+zeta_v_nm(:,:,0+1) = (B_v_r*eigmh+C_v_r*eigh)*exp(1i*alphap_r*x);
+nu_v_nm(:,0+1) = (1i*gamma_vp_r*B_v_r*eigh-1i*gamma_vp_r*C_v_r*eigmh)...
     *exp(1i*alphap_r*x);
-psi_v_nm(:,0+1,0+1) = (-1i*gamma_vp_r*B_v_r*eigmh+1i*gamma_vp_r*C_v_r*eigh)...
+psi_v_nm(:,:,0+1) = (-1i*gamma_vp_r*B_v_r*eigmh+1i*gamma_vp_r*C_v_r*eigh)...
     *exp(1i*alphap_r*x);
 for n=1:N
-  for m=1:M
-    if(n>1)
-      fu_nm1 = fu.*fu_nm1/(n-1);
-      fell_nm1 = fell.*fell_nm1/(n-1);
-    end
-    fu_nm = fu.*fu_nm/n;
-    fell_nm = fell.*fell_nm/n;
+  if(n>1)
+    fu_nm1 = fu.*fu_nm1/(n-1);
+    fell_nm1 = fell.*fell_nm1/(n-1);
+  end
+  fu_nm = fu.*fu_nm/n;
+  fell_nm = fell.*fell_nm/n;
   
-    temp1 = B_v_r*eigh*exp(1i*alphap_r*x).*(fu_nm*(1i*gamma_vp_r)^n);
-    temp2 = C_v_r*eigmh*exp(1i*alphap_r*x).*(fu_nm*(-1i*gamma_vp_r)^n);
-    xi_v_nm(:,m+1,n+1) = temp1 + temp2;
+  temp1 = B_v_r*eigh*exp(1i*alphap_r*x).*(fu_nm*(1i*gamma_vp_r)^n);
+  temp2 = C_v_r*eigmh*exp(1i*alphap_r*x).*(fu_nm*(-1i*gamma_vp_r)^n);
+  xi_v_nm(:,n+1) = temp1 + temp2;
   
-    temp3 = B_v_r*eigh*exp(1i*alphap_r*x).*(fu_nm1*(1i*gamma_vp_r)^(n-1));
-    temp4 = C_v_r*eigmh*exp(1i*alphap_r*x).*(fu_nm1*(-1i*gamma_vp_r)^(n-1));
-    nu_v_nm(:,n+1) = (1i*gamma_vp_r)*temp1 + (-1i*gamma_vp_r)*temp2...
+  temp3 = B_v_r*eigh*exp(1i*alphap_r*x).*(fu_nm1*(1i*gamma_vp_r)^(n-1));
+  temp4 = C_v_r*eigmh*exp(1i*alphap_r*x).*(fu_nm1*(-1i*gamma_vp_r)^(n-1));
+  nu_v_nm(:,n+1) = (1i*gamma_vp_r)*temp1 + (-1i*gamma_vp_r)*temp2...
       - (1i*alphap_r)*fu_x.*temp3 - (1i*alphap_r)*fu_x.*temp4;
   
-    temp5 = B_v_r*eigmh*exp(1i*alphap_r*x).*(fell_nm*(1i*gamma_vp_r)^n);
-    temp6 = C_v_r*eigh*exp(1i*alphap_r*x).*(fell_nm*(-1i*gamma_vp_r)^n);
-    zeta_v_nm(:,m+1,n+1) = temp5 + temp6;
+  temp5 = B_v_r*eigmh*exp(1i*alphap_r*x).*(fell_nm*(1i*gamma_vp_r)^n);
+  temp6 = C_v_r*eigh*exp(1i*alphap_r*x).*(fell_nm*(-1i*gamma_vp_r)^n);
+  zeta_v_nm(:,n+1) = temp5 + temp6;
   
-    temp7 = B_v_r*eigmh*exp(1i*alphap_r*x).*(fell_nm1*(1i*gamma_vp_r)^(n-1));
-    temp8 = C_v_r*eigh*exp(1i*alphap_r*x).*(fell_nm1*(-1i*gamma_vp_r)^(n-1));
-    psi_v_nm(:,m+1,n+1) = (-1i*gamma_vp_r)*temp5 + (1i*gamma_vp_r)*temp6...
+  temp7 = B_v_r*eigmh*exp(1i*alphap_r*x).*(fell_nm1*(1i*gamma_vp_r)^(n-1));
+  temp8 = C_v_r*eigh*exp(1i*alphap_r*x).*(fell_nm1*(-1i*gamma_vp_r)^(n-1));
+  psi_v_nm(:,n+1) = (-1i*gamma_vp_r)*temp5 + (1i*gamma_vp_r)*temp6...
       + (1i*alphap_r)*fell_x.*temp7 + (1i*alphap_r)*fell_x.*temp8;
-  end
 end
 
 V_u_nm = nu_v_nm - 1i*eta*xi_v_nm;
