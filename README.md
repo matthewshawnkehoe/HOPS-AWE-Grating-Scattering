@@ -16,11 +16,11 @@ function of illumination frequency, ω, and corrugation amplitude, h.
 
 Example 1: The Reflectivity Map and Energy Defect (D) for vacuum over a dielectric.
 
-![alt text](https://axion004.files.wordpress.com/2022/10/refl_map_vacuum_dielectric.png)
+![refl_map_vacuum_dielectric](https://axion004.files.wordpress.com/2022/10/refl_map_vacuum_dielectric.png)
 
 Example 2: The Reflectivity Map for vacuum over silver and gold.
 
-![alt text](https://axion004.files.wordpress.com/2022/10/refl_map_vacuum_metals.png)
+![refl_map_vacuum_metals](https://axion004.files.wordpress.com/2022/10/refl_map_vacuum_metals.png)
 
 More examples (with instructions on how to run the code) can be found in the plots directory.
 
