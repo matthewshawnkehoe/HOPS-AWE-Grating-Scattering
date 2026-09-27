@@ -1,0 +1,30 @@
+% Unit-level references
+addpath('/home/claude/hops/src'); addpath('/home/claude/ref');
+rand('seed',1); randn('seed',1);
+[D8,x8] = cheb(8);
+[xx,kk,alphap,betap,eep,eem] = setup_2d(16,2*pi,0.1,1.3);
+[xx2,kk2,alphap2,betap2] = setup_2d(16,2*pi,0,sqrt((0.05+2.275i)^2*2.25));
+u = randn(16,9)+1i*randn(16,9);
+p = kk;
+ux = dx(u,p); uz = dz(u,D8,1.7);
+gq = gamma_exp(0.1,alphap(3),1.3,betap(3),sqrt(0.01+1.69),6);
+f = cos(xx); fx = -sin(xx);
+E = E_exp(gq,f,5,6); Elf = E_exp_lf(gq,f,5,6);
+Aa = A_exp(gq,fx,5,6);
+T = T_dno(0.1,alphap,1.3,betap,alphap(1)^2+betap(1)^2,16,6);
+Q = randn(16,1)+1i*randn(16,1); R = randn(16,1)+1i*randn(16,1);
+[Ui,Wi] = AInverse(Q,R,betap,betap2,16,0.7);
+% summation units
+C = randn(9,9)+1i*randn(9,9);
+ts1 = taylorsum_2_coeff(C,0.1,0.05,8,8);
+ts2 = taylorsum2(C,0.1,0.05,8,8);
+ps1 = padesum2(C,0.1,0.05,8,8);
+ps2 = padesum2_safe(C,0.1,0.05,8,8);
+c1 = 1./factorial(0:10)';
+[pp1,pa1,pb1] = padesum(c1,0.7,5);
+c2 = [1;0.5;1e-16;0;0];
+pp2 = padesum_safe(c2,0.3,2);
+pp3 = 0;
+[r,pa,pb,mu,nu] = padeapprox(c1,4,4);
+pr = r(0.7); clear r;
+save('-v7','ref_units.mat');
