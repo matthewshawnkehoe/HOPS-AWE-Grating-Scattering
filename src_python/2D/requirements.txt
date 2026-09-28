@@ -1,0 +1,5 @@
+numpy>=1.24
+pyyaml>=6     # refractiveindex.info reader (hops/materials.py)
+scipy>=1.10
+matplotlib>=3.7
+pytest>=7   # optional, for `pytest tests`
