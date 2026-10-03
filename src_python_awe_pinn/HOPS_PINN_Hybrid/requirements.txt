@@ -1,0 +1,6 @@
+numpy
+scipy
+matplotlib
+pytest
+# plus the sibling projects HOPS_Python (HOPS/AWE, refl_map.py) and PINN_HOPS (problem, LSQ-PINN features),
+# found as ../HOPS_Python and ../PINN_HOPS or via HOPS_PYTHON / PINN_HOPS environment variables

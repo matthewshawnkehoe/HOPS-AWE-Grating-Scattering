@@ -1,0 +1,99 @@
+air          n~1.00+0.00i wood   0 unreliable   0 % max|dR| 2.1e-11 nonphys AWE 0.0 % -> 0.0 % (41 s)
+water        n~1.36+0.00i wood  16 unreliable  48 % max|dR| 1.1e-03 nonphys AWE 0.0 % -> 0.0 % (242 s)
+ethanol      n~1.37+0.00i wood  16 unreliable  45 % max|dR| 1.1e-03 nonphys AWE 0.0 % -> 0.0 % (216 s)
+PDMS         n~1.44+0.00i wood  18 unreliable  47 % max|dR| 2.2e-03 nonphys AWE 0.0 % -> 0.0 % (97 s)
+PMMA         n~1.50+0.00i wood  16 unreliable  41 % max|dR| 1.6e-03 nonphys AWE 0.0 % -> 0.0 % (98 s)
+fused_silica n~1.50+0.00i wood  16 unreliable  53 % max|dR| 1.1e-03 nonphys AWE 0.0 % -> 0.0 % (99 s)
+BK7          n~1.54+0.00i wood  18 unreliable  50 % max|dR| 2.7e-03 nonphys AWE 0.0 % -> 0.0 % (100 s)
+CaF2         n~1.43+0.00i wood  18 unreliable  44 % max|dR| 2.7e-03 nonphys AWE 0.0 % -> 0.0 % (90 s)
+MgF2         n~1.40+0.00i wood  16 unreliable  44 % max|dR| 9.8e-04 nonphys AWE 0.0 % -> 0.0 % (93 s)
+Au           n~1.16+1.90i wood   0 unreliable  21 % max|dR| 7.2e-02 nonphys AWE 0.0 % -> 0.0 % (72 s)
+ZnSe         n~2.44+0.00i wood  30 unreliable  56 % max|dR| 5.3e-03 nonphys AWE 0.0 % -> 0.0 % (113 s)
+Cu           n~1.00+2.00i wood   0 unreliable  22 % max|dR| 4.4e-02 nonphys AWE 0.0 % -> 0.0 % (72 s)
+Al           n~0.16+1.53i wood   0 unreliable  33 % max|dR| 5.9e-02 nonphys AWE 0.0 % -> 0.0 % (79 s)
+Na           n~0.05+1.39i wood   0 unreliable  28 % max|dR| 1.8e-02 nonphys AWE 0.0 % -> 0.0 % (75 s)
+K            n~0.13+1.01i wood   0 unreliable  29 % max|dR| 2.2e-02 nonphys AWE 0.0 % -> 0.0 % (71 s)
+Mg           n~0.17+2.09i wood   0 unreliable  51 % max|dR| 5.2e-02 nonphys AWE 0.0 % -> 0.0 % (81 s)
+AuAg50       n~1.13+2.01i wood   0 unreliable  20 % max|dR| 4.5e-02 nonphys AWE 0.0 % -> 0.0 % (71 s)
+Au_IR        n~1.59+21.78i wood   0 unreliable  26 % max|dR| 2.1e-01 nonphys AWE 0.1 % -> 0.0 % (176 s)
+Ag_IR        n~1.37+22.45i wood   0 unreliable  26 % max|dR| 2.1e-01 nonphys AWE 0.1 % -> 0.0 % (175 s)
+TiN          n~1.76+1.69i wood   0 unreliable  20 % max|dR| 1.3e-02 nonphys AWE 0.0 % -> 0.0 % (74 s)
+ITO          n~1.68+0.14i wood   0 unreliable  35 % max|dR| 3.0e-03 nonphys AWE 0.0 % -> 0.0 % (96 s)
+AZO          n~0.96+2.30i wood   0 unreliable  27 % max|dR| 6.2e-02 nonphys AWE 0.0 % -> 0.0 % (78 s)
+W            n~1.01+3.86i wood   0 unreliable  32 % max|dR| 1.5e-01 nonphys AWE 0.1 % -> 0.0 % (84 s)
+Fe           n~1.81+1.96i wood   0 unreliable  20 % max|dR| 1.5e-02 nonphys AWE 0.0 % -> 0.0 % (75 s)
+Co           n~1.51+2.41i wood   0 unreliable  23 % max|dR| 3.4e-02 nonphys AWE 0.0 % -> 0.0 % (76 s)
+Cr           n~1.76+2.24i wood   0 unreliable  23 % max|dR| 1.8e-02 nonphys AWE 0.0 % -> 0.0 % (79 s)
+Ni           n~1.61+2.40i wood   0 unreliable  22 % max|dR| 3.9e-02 nonphys AWE 0.0 % -> 0.0 % (79 s)
+Ti           n~1.62+2.33i wood   0 unreliable  23 % max|dR| 2.4e-02 nonphys AWE 0.0 % -> 0.0 % (78 s)
+Pt           n~1.13+2.86i wood   0 unreliable  25 % max|dR| 1.8e-01 nonphys AWE 0.0 % -> 0.0 % (80 s)
+Pd           n~1.15+2.36i wood   0 unreliable  24 % max|dR| 4.8e-02 nonphys AWE 0.0 % -> 0.0 % (80 s)
+Mo           n~0.66+4.07i wood   0 unreliable  34 % max|dR| 1.3e+00 nonphys AWE 0.7 % -> 0.0 % (92 s)
+brass        n~1.12+1.89i wood   0 unreliable  20 % max|dR| 3.1e-02 nonphys AWE 0.0 % -> 0.0 % (76 s)
+steel        n~1.46+2.32i wood   0 unreliable  23 % max|dR| 3.2e-02 nonphys AWE 0.0 % -> 0.0 % (79 s)
+VO2_cold     n~3.06+0.35i wood   0 unreliable  22 % max|dR| 3.6e-03 nonphys AWE 0.0 % -> 0.0 % (93 s)
+VO2_hot      n~2.35+2.55i wood   0 unreliable  22 % max|dR| 4.8e-02 nonphys AWE 0.0 % -> 0.0 % (80 s)
+Si           n~2.99+2.73i wood   0 unreliable  33 % max|dR| 1.4e-02 nonphys AWE 0.0 % -> 0.0 % (96 s)
+Si_IR        n~3.54+0.00i wood  32 unreliable  49 % max|dR| 4.7e-03 nonphys AWE 0.0 % -> 0.0 % (124 s)
+Ge           n~2.59+2.56i wood   0 unreliable  31 % max|dR| 4.0e-02 nonphys AWE 0.0 % -> 0.0 % (85 s)
+GaAs         n~2.72+1.95i wood   0 unreliable  25 % max|dR| 1.6e-02 nonphys AWE 0.0 % -> 0.0 % (87 s)
+Ge_IR        n~4.06+0.00i wood  48 unreliable  62 % max|dR| 1.4e-02 nonphys AWE 0.0 % -> 0.0 % (140 s)
+InP          n~1.63+2.06i wood   0 unreliable  23 % max|dR| 7.7e-03 nonphys AWE 0.0 % -> 0.0 % (78 s)
+GaP          n~1.92+2.65i wood   0 unreliable  30 % max|dR| 2.4e-02 nonphys AWE 0.0 % -> 0.0 % (84 s)
+InSb         n~4.14+0.28i wood   0 unreliable  38 % max|dR| 2.1e-02 nonphys AWE 0.0 % -> 0.0 % (115 s)
+CdTe         n~2.70+1.42i wood   0 unreliable  22 % max|dR| 6.4e-03 nonphys AWE 0.0 % -> 0.0 % (84 s)
+MAPbI3       n~2.14+0.52i wood   0 unreliable  20 % max|dR| 7.4e-03 nonphys AWE 0.0 % -> 0.0 % (77 s)
+MoS2         n~2.51+2.38i wood   0 unreliable  23 % max|dR| 2.8e-02 nonphys AWE 0.0 % -> 0.0 % (84 s)
+SiO2         n~1.50+0.00i wood  16 unreliable  53 % max|dR| 1.1e-03 nonphys AWE 0.0 % -> 0.0 % (100 s)
+sapphire     n~1.85+0.00i wood  24 unreliable  25 % max|dR| 7.3e-04 nonphys AWE 0.0 % -> 0.0 % (87 s)
+Si3N4        n~2.14+0.00i wood  26 unreliable  47 % max|dR| 1.9e-03 nonphys AWE 0.0 % -> 0.0 % (108 s)
+TiO2         n~2.82+0.00i wood  36 unreliable  56 % max|dR| 2.0e-03 nonphys AWE 0.0 % -> 0.0 % (128 s)
+ZnO          n~2.08+0.00i wood  24 unreliable  33 % max|dR| 9.7e-03 nonphys AWE 0.0 % -> 0.0 % (87 s)
+ZnGeP2       n~3.22+0.00i wood  38 unreliable  44 % max|dR| 3.6e-03 nonphys AWE 0.0 % -> 0.0 % (118 s)
+diamond      n~2.75+0.13i wood  22 unreliable  43 % max|dR| 1.0e-02 nonphys AWE 0.0 % -> 0.0 % (106 s)
+HfO2         n~2.33+0.00i wood  28 unreliable  44 % max|dR| 9.0e-03 nonphys AWE 0.0 % -> 0.0 % (91 s)
+Ta2O5        n~2.27+0.00i wood  28 unreliable  46 % max|dR| 1.5e-03 nonphys AWE 0.0 % -> 0.0 % (108 s)
+LiNbO3       n~2.41+0.00i wood  30 unreliable  51 % max|dR| 4.3e-03 nonphys AWE 0.0 % -> 0.0 % (115 s)
+AlN          n~2.52+0.00i wood  30 unreliable  41 % max|dR| 1.8e-03 nonphys AWE 0.0 % -> 0.0 % (107 s)
+ZnS          n~2.28+0.00i wood  28 unreliable  49 % max|dR| 2.8e-03 nonphys AWE 0.0 % -> 0.0 % (112 s)
+SiO2_IR      n~1.11+0.08i wood   8 unreliable  58 % max|dR| 1.0e-03 nonphys AWE 0.0 % -> 0.0 % (111 s)
+sapphire_IR  n~1.39+0.86i wood   0 unreliable  41 % max|dR| 3.3e-02 nonphys AWE 0.0 % -> 0.0 % (106 s)
+SiC_film     n~3.08+0.20i wood   0 unreliable  30 % max|dR| 1.4e-02 nonphys AWE 0.0 % -> 0.0 % (108 s)
+SiC          n~2.97+0.02i wood  20 unreliable  41 % max|dR| 3.6e-02 nonphys AWE 0.0 % -> 0.0 % (116 s)
+| feature | Spearman rho with log10 max\|R_hyb - R_AWE\| | p-value | Spearman rho with the fraction of the map where AWE is off by > 1e-6 | p-value |
+|---|---|---|---|---|
+| Re n | -0.29 | 2e-02 | -0.12 | 3e-01 |
+| Im n | 0.84 | 8e-18 | 0.70 | 1e-10 |
+| Re eps | -0.71 | 5e-11 | -0.50 | 3e-05 |
+| Wood anomalies in bands | -0.64 | 2e-08 | -0.42 | 6e-04 |
+| lossless | -0.70 | 2e-10 | -0.46 | 1e-04 |
+| |Re eps + 1| (SPP) | -0.34 | 6e-03 | -0.12 | 3e-01 |
+
+| group | materials | median fraction with AWE off by > 1e-6 | median max\|R_hyb - R_AWE\| | AWE non-physical R | hybrid non-physical R |
+|---|---|---|---|---|---|
+| lossless dielectrics | 20 | 16 % | 2.0e-03 | 0.0 % | 0.0 % |
+| absorbing, Re eps > 0 | 12 | 17 % | 6.9e-03 | 0.0 % | 0.0 % |
+| metallic somewhere (Re eps < 0) | 32 | 20 % | 3.6e-02 | 0.0 % | 0.0 % |
+
+Decision tree (depth 2) for "AWE off by > 1e-6 on more than 10 % of the map" (training accuracy 100%, 62 of 64 materials positive):
+```
+|--- Re n <= 1.11
+|   |--- Im n <= 0.55
+|   |   |--- class: 0
+|   |--- Im n >  0.55
+|   |   |--- class: 1
+|--- Re n >  1.11
+|   |--- class: 1
+
+```
+
+| material | n (band mean) | Wood anomalies | AWE off by > 1e-6 | max \|R_hyb - R_AWE\| | AWE / hybrid non-physical R | max log10\|D\| AWE -> hybrid | hybrid: min R/R_flat (resonance) | absorptance range |
+|---|---|---|---|---|---|---|---|---|
+| Mo | 0.66+4.07i | 0 | 26 % | 1.3e+00 | 0.7 % / 0.0 % | absorbing | 0.993 | 0.04-0.43 |
+| Ag_IR | 1.37+22.45i | 0 | 27 % | 2.1e-01 | 0.1 % / 0.0 % | absorbing | 0.999 | 0.01-0.02 |
+| Au_IR | 1.59+21.78i | 0 | 27 % | 2.1e-01 | 0.1 % / 0.0 % | absorbing | 0.998 | 0.01-0.02 |
+| Pt | 1.13+2.86i | 0 | 22 % | 1.8e-01 | 0.0 % / 0.0 % | absorbing | 0.987 | 0.04-0.70 |
+| Ag | 0.82+1.94i | 0 | 18 % | 1.8e-01 | 0.2 % / 0.0 % | absorbing | 0.984 | 0.01-0.77 |
+| W | 1.01+3.86i | 0 | 24 % | 1.5e-01 | 0.1 % / 0.0 % | absorbing | 0.993 | 0.07-0.47 |
+| Au | 1.16+1.90i | 0 | 17 % | 7.2e-02 | 0.0 % / 0.0 % | absorbing | 0.984 | 0.04-0.78 |
+| AZO | 0.96+2.30i | 0 | 20 % | 6.2e-02 | 0.0 % / 0.0 % | absorbing | 0.982 | 0.24-0.70 |

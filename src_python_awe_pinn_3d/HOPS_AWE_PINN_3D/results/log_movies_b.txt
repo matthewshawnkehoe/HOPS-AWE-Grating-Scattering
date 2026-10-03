@@ -1,0 +1,2 @@
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/compare_dielectric_eps.mp4 (299 s)
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/compare_dielectric_lambda.mp4 (389 s)

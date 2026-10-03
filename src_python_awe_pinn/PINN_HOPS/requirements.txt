@@ -1,0 +1,7 @@
+numpy
+scipy
+matplotlib
+torch
+pytest
+deepxde      # only for deepxde_solver.py (DDE_BACKEND=pytorch)
+# plus HOPS_Python (for the HOPS/AWE references); set HOPS_PYTHON if it is not ../HOPS_Python

@@ -1,0 +1,3 @@
+oblique_gold: 15 windows computed in 585 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_oblique_gold.mp4  (799 s)
+Killed

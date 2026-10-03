@@ -1,0 +1,10 @@
+# everything HOPS_AWE_PINN_3D (and the parts of HOPS_Python it uses) needs
+#   pip install -r requirements.txt
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+pyyaml>=6            # refractiveindex.info material data (HOPS_Python/hops/materials.py)
+scikit-learn>=1.2    # decision tree in materials_hybrid_3D.py
+imageio-ffmpeg>=0.4  # bundled ffmpeg for the movies (no separate ffmpeg install needed)
+pytest>=7            # tests
+# torch is NOT needed

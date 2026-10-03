@@ -1,0 +1,6 @@
+dielectric_joint: 9 windows computed in 428 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_dielectric_crossed.mp4  (777 s)
+conical_1d: 5 windows computed in 101 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_conical.mp4  (412 s)
+egg_silver: 8 windows computed in 404 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_egg_silver.mp4  (716 s)

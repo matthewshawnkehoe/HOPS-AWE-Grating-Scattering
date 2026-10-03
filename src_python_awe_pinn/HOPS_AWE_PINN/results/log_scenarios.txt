@@ -1,0 +1,78 @@
+sapphire_reststrahlen  grid 21 windows 97  max|dR| 1.1e-04  corrected    2 %  AWE  109.4 s  hybrid    277 s
+SiC_reststrahlen       grid 21 windows 97  max|dR| 2.2e-03  corrected    3 %  AWE  109.2 s  hybrid    317 s
+glass_over_air         grid 21 windows  2  max|dR| 1.7e+00  corrected   40 %  AWE    2.1 s  hybrid     45 s
+high_contrast          grid 21 windows 17  max|dR| 1.7e-03  corrected   12 %  AWE   20.2 s  hybrid    105 s  log10|D| max AWE   -2.5 -> hybrid   -7.9
+TiO2                   grid 21 windows 15  max|dR| 1.1e-03  corrected   24 %  AWE   16.7 s  hybrid    159 s  log10|D| max AWE   -2.5 -> hybrid   -8.4
+thesis24               grid 31 windows  1  max|dR| 4.5e-02  corrected   91 %  AWE    1.2 s  hybrid    119 s
+thesis25               grid 31 windows  1  max|dR| 3.8e-02  corrected  100 %  AWE    2.1 s  hybrid    133 s
+thesis33a              grid 31 windows  1  max|dR| 3.4e-02  corrected   96 %  AWE    1.6 s  hybrid    177 s
+thesis33c              grid 31 windows  1  max|dR| 5.3e-02  corrected   96 %  AWE    1.3 s  hybrid    228 s
+Ag_disp                grid 21 windows 51  max|dR| 8.1e-03  corrected    5 %  AWE  114.8 s  hybrid    222 s
+Al_uv                  grid 21 windows 51  max|dR| 7.1e-03  corrected    6 %  AWE  112.9 s  hybrid    179 s
+Na                     grid 21 windows 51  max|dR| 2.2e-03  corrected    5 %  AWE   52.8 s  hybrid    155 s
+TiN                    grid 21 windows 51  max|dR| 2.9e-03  corrected    4 %  AWE   54.3 s  hybrid    145 s
+Ti_absorber            grid 21 windows 51  max|dR| 8.0e-03  corrected    4 %  AWE   55.2 s  hybrid    144 s
+water_over_gold        grid 21 windows 51  max|dR| 1.1e+00  corrected    5 %  AWE   55.8 s  hybrid    147 s
+glass_over_silver      grid 21 windows 51  max|dR| 2.2e-01  corrected    6 %  AWE   54.7 s  hybrid    160 s
+ITO_enz                grid 21 windows 22  max|dR| 1.7e-03  corrected   16 %  AWE   23.5 s  hybrid    201 s
+AZO_ir                 grid 21 windows 22  max|dR| 5.5e-03  corrected   12 %  AWE   24.1 s  hybrid    138 s
+VO2_cold               grid 21 windows 22  max|dR| 7.5e-04  corrected   14 %  AWE   23.4 s  hybrid    175 s
+VO2_hot                grid 21 windows 22  max|dR| 6.0e-03  corrected   14 %  AWE   22.7 s  hybrid    151 s
+Si                     grid 21 windows 22  max|dR| 1.5e-03  corrected   26 %  AWE   24.0 s  hybrid    274 s
+thesis21               grid 31 windows  3  max|dR| 3.0e-02  corrected   83 %  AWE   10.1 s  hybrid   1216 s  log10|D| max AWE   -1.0 -> hybrid   -3.6
+thesis22               grid 31 windows  3  max|dR| 3.4e-02  corrected   82 %  AWE   10.0 s  hybrid   1156 s  log10|D| max AWE   -0.0 -> hybrid   -7.3
+silver                 grid 31 windows  6  max|dR| 1.1e-01  corrected   97 %  AWE    7.2 s  hybrid    449 s
+gold                   grid 31 windows  6  max|dR| 2.2e-02  corrected   95 %  AWE    7.0 s  hybrid    544 s
+dielectric             grid 31 windows  6  max|dR| 6.3e-05  corrected   67 %  AWE    6.5 s  hybrid    441 s  log10|D| max AWE   -4.2 -> hybrid  -10.5
+dielectric_alpha       grid 31 windows  6  max|dR| 6.3e-05  corrected   68 %  AWE    7.3 s  hybrid    529 s  log10|D| max AWE   -4.2 -> hybrid   -8.2
+thesis17               grid 31 windows  6  max|dR| 6.3e-05  corrected   67 %  AWE    6.0 s  hybrid    421 s  log10|D| max AWE   -4.2 -> hybrid  -10.5
+thesis18               grid 31 windows  6  max|dR| 6.3e-05  corrected   67 %  AWE    6.7 s  hybrid    484 s  log10|D| max AWE   -4.2 -> hybrid  -10.1
+thesis19a              grid 31 windows  6  max|dR| 1.1e-01  corrected   97 %  AWE    6.7 s  hybrid    448 s
+thesis19b              grid 31 windows  6  max|dR| 2.2e-02  corrected   95 %  AWE    7.2 s  hybrid    526 s
+thesis20a              grid 31 windows  6  max|dR| 2.8e-02  corrected   95 %  AWE    6.9 s  hybrid    578 s
+thesis29               grid 31 windows  6  max|dR| 1.8e-04  corrected   69 %  AWE    6.4 s  hybrid    436 s  log10|D| max AWE   -3.6 -> hybrid   -9.8
+thesis20b              grid 31 windows  6  max|dR| 1.4e-01  corrected   97 %  AWE    7.0 s  hybrid    597 s
+thesis30               grid 31 windows  6  max|dR| 1.8e-04  corrected   69 %  AWE    6.2 s  hybrid    511 s  log10|D| max AWE   -3.6 -> hybrid   -9.2
+thesis31a              grid 31 windows  6  max|dR| 4.0e-02  corrected   94 %  AWE    7.4 s  hybrid    693 s
+thesis31b              grid 31 windows  6  max|dR| 2.0e-02  corrected   95 %  AWE    7.4 s  hybrid    746 s
+| scenario | n_w | mode, summation | windows x grid | corrected points | max \|R_hyb - R_AWE\| | max log10\|D\| AWE -> hybrid (lossless) | AWE / hybrid time |
+|---|---|---|---|---|---|---|---|
+| silver | (0.05+2.275j) | TM, Pade 15/15 | 6 x 31^2 | 97 % | 1.1e-01 | absorbing (A ~ 0.04) | 7.2 / 449 s |
+| gold | (1.48+1.883j) | TM, Pade 15/15 | 6 x 31^2 | 95 % | 2.2e-02 | absorbing (A ~ 0.65) | 7.0 / 544 s |
+| dielectric | 1.1 | TM, Taylor 16/16 | 6 x 31^2 | 67 % | 6.3e-05 | -4.2 -> -10.5 | 6.5 / 441 s |
+| dielectric_alpha | 1.1 | TM, Taylor 16/16 | 6 x 31^2 | 68 % | 6.3e-05 | -4.2 -> -8.2 | 7.3 / 529 s |
+| thesis17 | 1.1 | TM, Taylor 16/16 | 6 x 31^2 | 67 % | 6.3e-05 | -4.2 -> -10.5 | 6.0 / 421 s |
+| thesis18 | 1.1 | TM, Taylor 16/16 | 6 x 31^2 | 67 % | 6.3e-05 | -4.2 -> -10.1 | 6.7 / 484 s |
+| thesis19a | (0.05+2.275j) | TM, Pade 15/15 | 6 x 31^2 | 97 % | 1.1e-01 | absorbing (A ~ 0.04) | 6.7 / 448 s |
+| thesis19b | (1.48+1.883j) | TM, Pade 15/15 | 6 x 31^2 | 95 % | 2.2e-02 | absorbing (A ~ 0.65) | 7.2 / 526 s |
+| thesis20a | (3.8313+2.9043j) | TM, Pade 15/15 | 6 x 31^2 | 95 % | 2.8e-02 | absorbing (A ~ 0.52) | 6.9 / 578 s |
+| thesis20b | (4.274+9.579j) | TM, Pade 15/15 | 6 x 31^2 | 97 % | 1.4e-01 | absorbing (A ~ 0.16) | 7.0 / 597 s |
+| thesis21 | 3.1874 | TM, Pade 13/13 | 3 x 31^2 | 83 % | 3.0e-02 | -1.0 -> -3.6 | 10.1 / 1216 s |
+| thesis22 | 2.1054 | TM, Pade 13/13 | 3 x 31^2 | 82 % | 3.4e-02 | -0.0 -> -7.3 | 10.0 / 1156 s |
+| thesis23 | 8.1 | TM, Pade 12/12 | 1 x 31^2 | 93 % | 5.3e-03 | -2.0 -> -4.4 | 0.7 / 120 s |
+| thesis24 | 20j | TM, Pade 15/15 | 1 x 31^2 | 91 % | 4.5e-02 | absorbing (A ~ 0.00) | 1.2 / 119 s |
+| thesis25 | 40j | TM, Pade 20/20 | 1 x 31^2 | 100 % | 3.8e-02 | absorbing (A ~ 0.00) | 2.1 / 133 s |
+| thesis29 | 1.1 | TE, Taylor 15/15 | 6 x 31^2 | 69 % | 1.8e-04 | -3.6 -> -9.8 | 6.4 / 436 s |
+| thesis30 | 1.1 | TE, Taylor 15/15 | 6 x 31^2 | 69 % | 1.8e-04 | -3.6 -> -9.2 | 6.2 / 511 s |
+| thesis31a | (0.94+1.337j) | TE, Pade 15/15 | 6 x 31^2 | 94 % | 4.0e-02 | absorbing (A ~ 0.68) | 7.4 / 693 s |
+| thesis31b | (2.1396+3.984j) | TE, Pade 15/15 | 6 x 31^2 | 95 % | 2.0e-02 | absorbing (A ~ 0.34) | 7.4 / 746 s |
+| thesis32 | 20j | TE, Pade 15/15 | 1 x 31^2 | 78 % | 3.0e-02 | absorbing (A ~ -0.00) | 1.6 / 101 s |
+| thesis33a | 25j | TE, Pade 15/15 | 1 x 31^2 | 96 % | 3.4e-02 | absorbing (A ~ 0.00) | 1.6 / 177 s |
+| thesis33c | 25j | TE, Pade 15/15 | 1 x 31^2 | 96 % | 5.3e-02 | absorbing (A ~ 0.00) | 1.3 / 228 s |
+| Ag_disp | Ag | TM, Pade 15/15 | 51 x 21^2 | 5 % | 8.1e-03 | absorbing (A ~ 0.00) | 114.8 / 222 s |
+| Al_uv | Al | TM, Pade 15/15 | 51 x 21^2 | 6 % | 7.1e-03 | absorbing (A ~ 0.07) | 112.9 / 179 s |
+| Na | Na | TM, Pade 15/15 | 51 x 21^2 | 5 % | 2.2e-03 | absorbing (A ~ 0.01) | 52.8 / 155 s |
+| TiN | TiN | TM, Pade 15/15 | 51 x 21^2 | 4 % | 2.9e-03 | absorbing (A ~ 0.19) | 54.3 / 145 s |
+| ITO_enz | ITO | TM, Pade 15/15 | 22 x 21^2 | 16 % | 1.7e-03 | absorbing (A ~ 0.19) | 23.5 / 201 s |
+| AZO_ir | AZO | TM, Pade 15/15 | 22 x 21^2 | 12 % | 5.5e-03 | absorbing (A ~ 0.70) | 24.1 / 138 s |
+| VO2_cold | VO2_cold | TM, Pade 15/15 | 22 x 21^2 | 14 % | 7.5e-04 | absorbing (A ~ 0.59) | 23.4 / 175 s |
+| VO2_hot | VO2_hot | TM, Pade 15/15 | 22 x 21^2 | 14 % | 6.0e-03 | absorbing (A ~ 0.42) | 22.7 / 151 s |
+| Si | Si | TM, Pade 15/15 | 22 x 21^2 | 26 % | 1.5e-03 | absorbing (A ~ 0.32) | 24.0 / 274 s |
+| TiO2 | TiO2 | TM, Pade 15/15 | 15 x 21^2 | 24 % | 1.1e-03 | -2.5 -> -8.4 | 16.7 / 159 s |
+| Ti_absorber | Ti | TM, Pade 15/15 | 51 x 21^2 | 4 % | 8.0e-03 | absorbing (A ~ 0.30) | 55.2 / 144 s |
+| SiC_reststrahlen | SiC | TM, Pade 15/15 | 97 x 21^2 | 3 % | 2.2e-03 | absorbing (A ~ 0.00) | 109.2 / 317 s |
+| sapphire_reststrahlen | sapphire_IR | TM, Pade 15/15 | 97 x 21^2 | 2 % | 1.1e-04 | absorbing (A ~ 0.00) | 109.4 / 277 s |
+| water_over_gold | Au | TM, Pade 15/15 | 51 x 21^2 | 5 % | 1.1e+00 | absorbing (A ~ 0.07) | 55.8 / 147 s |
+| glass_over_silver | Ag | TM, Pade 15/15 | 51 x 21^2 | 6 % | 2.2e-01 | absorbing (A ~ 0.01) | 54.7 / 160 s |
+| glass_over_air | air | TM, Pade 15/15 | 2 x 21^2 | 40 % | 1.7e+00 | absorbing (A ~ 0.00) | 2.1 / 45 s |
+| high_contrast | Si_IR | TM, Pade 15/15 | 17 x 21^2 | 12 % | 1.7e-03 | -2.5 -> -7.9 | 20.2 / 105 s |

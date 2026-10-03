@@ -1,0 +1,2 @@
+silver_lattice: 3 windows computed in 394 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_silver_crossed.mp4  (617 s)

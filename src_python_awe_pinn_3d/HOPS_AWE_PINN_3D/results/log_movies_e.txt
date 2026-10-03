@@ -1,0 +1,5 @@
+Au_crossed: 23 windows computed in 232 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_au_crossed_spp.mp4  (434 s)
+Au_crossed: 23 windows computed in 228 s
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/hybrid_au_crossed_spp_eps.mp4  (423 s)
+saved /home/claude/HOPS_AWE_PINN_3D/figures/movies/compare_TiO2_lambda.mp4 (440 s)

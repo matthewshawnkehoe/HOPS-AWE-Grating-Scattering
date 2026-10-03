@@ -1,0 +1,24 @@
+dielectric: 1 windows, AWE 1.3 s, hybrid 115 s (1207/1681 points needed the least-squares weights)
+saved /home/claude/HOPS_AWE_PINN/figures/movies/compare_wood_anomalies.mp4 (259 s)
+dielectric: 1 windows, AWE 1.3 s, hybrid 95 s (867/1681 points needed the least-squares weights)
+saved /home/claude/HOPS_AWE_PINN/figures/movies/compare_paper_fig9_edges.mp4 (233 s)
+thesis23: 1 windows, AWE 0.8 s, hybrid 213 s (1566/1681 points needed the least-squares weights)
+saved /home/claude/HOPS_AWE_PINN/figures/movies/compare_large_eps.mp4 (363 s)
+Ag_disp: 10 windows, AWE 8.5 s, hybrid 175 s (3182/16000 points needed the least-squares weights)
+Ag_disp: 10 windows computed in 183 s
+saved /home/claude/HOPS_AWE_PINN/figures/movies/hybrid_silver_spp.mp4  (290 s)
+Ag_disp: 10 windows, AWE 8.2 s, hybrid 166 s (3182/16000 points needed the least-squares weights)
+Ag_disp: 10 windows computed in 174 s
+saved /home/claude/HOPS_AWE_PINN/figures/movies/hybrid_silver_spp_eps.mp4  (277 s)
+water_over_gold: 11 windows, AWE 9.4 s, hybrid 166 s (3256/17600 points needed the least-squares weights)
+water_over_gold: 11 windows computed in 176 s
+saved /home/claude/HOPS_AWE_PINN/figures/movies/hybrid_gold_spr.mp4  (289 s)
+dielectric: 6 windows, AWE 6.8 s, hybrid 700 s (6447/9600 points needed the least-squares weights)
+dielectric: 6 windows computed in 707 s
+saved /home/claude/HOPS_AWE_PINN/figures/movies/hybrid_dielectric.mp4  (854 s)
+SiC_reststrahlen: 19 windows, AWE 15.0 s, hybrid 299 s (5723/30400 points needed the least-squares weights)
+SiC_reststrahlen: 19 windows computed in 314 s
+saved /home/claude/HOPS_AWE_PINN/figures/movies/hybrid_sic_sphp.mp4  (449 s)
+glass_over_air: 2 windows, AWE 1.9 s, hybrid 182 s (1513/3200 points needed the least-squares weights)
+glass_over_air: 2 windows computed in 184 s
+saved /home/claude/HOPS_AWE_PINN/figures/movies/hybrid_tir.mp4  (286 s)
